@@ -13,8 +13,9 @@ public class TransacaoService {
         }
         destino.adicionarSaldo(valor);
         System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual =" + destino.getSaldo());
-
-        salvarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
+        Transacao transacao = new Transacao(null, destino, valor, TipoTransacao.DEPOSITO);
+        salvarTransacao(transacao);
+        origem.adicionarTransacao(transacao);
     }
 
     public void sacar(Conta origem, BigDecimal valor) {
@@ -27,7 +28,9 @@ public class TransacaoService {
         }
         origem.subtrairSaldo(valor);
         System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual =" + origem.getSaldo());
-        salvarTransacao(new Transacao(origem, null, valor, TipoTransacao.SAQUE));
+        Transacao transacao = new Transacao(origem, null, valor, TipoTransacao.SAQUE);
+        salvarTransacao(transacao);
+        origem.adicionarTransacao(transacao);
     }
 
     public void transferir(Conta origem, Conta destino, BigDecimal valor) {
@@ -43,7 +46,10 @@ public class TransacaoService {
         origem.subtrairSaldo(valor);
         destino.adicionarSaldo(valor);
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " + destino.getTitular().getNome() +" realizada com sucesso!");
-        salvarTransacao(new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA));
+        Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
+        salvarTransacao(transacao));
+        destino.adicionarTransacao(transacao);
+        origem.adicionarTransacao(transacao);
     }
 
     public void salvarTransacao(Transacao transacao){
