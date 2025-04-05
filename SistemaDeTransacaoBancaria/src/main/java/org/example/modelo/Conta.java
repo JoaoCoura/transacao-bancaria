@@ -37,8 +37,8 @@ public class Conta {
         return numeroConta;
     }
 
-    public List<Transacao> getHistoricoTransferencias() {
-        return historicoTransferencias;
+    public List<Transacao> getHistoricoTransacoes() {
+        return historicoTransacoes;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Conta {
 
     public void desativarConta()
     {
-        this.status = status.DESATIVA;
+        this.status = status.INATIVA;
     }
 
     public void ativarConta()

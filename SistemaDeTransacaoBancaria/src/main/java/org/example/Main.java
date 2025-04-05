@@ -2,9 +2,12 @@ package org.example;
 
 import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
+import org.example.modelo.Transacao;
 import org.example.modelo.TransacaoService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,8 +26,8 @@ public class Main {
         gerenciador.sacar(conta1, new BigDecimal("200.00"));
         gerenciador.transferir(conta1, conta2, new BigDecimal("100.00"));
 
-        List<Transacao> historico = conta1.getHistoricoTransferencias();
-        System.out.println("Histórico de Transferências da Conta " + conta1.getNumeroConta() + ":");
+        List<Transacao> historico = conta2.getHistoricoTransacoes();
+        System.out.println("Histórico de Transferências da Conta " + conta2.getNumeroConta() + ":");
         for (Transacao transacao : historico) {
             System.out.println(transacao);
         }
