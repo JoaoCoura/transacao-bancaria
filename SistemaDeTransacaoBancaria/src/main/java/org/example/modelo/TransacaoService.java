@@ -11,7 +11,7 @@ public class TransacaoService {
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
             throw new IllegalArgumentException("Valor do depósito deve ser positivo.");
         }
-        destino.incrementarSaldo(valor);
+        destino.adicionarSaldo(valor);
         System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual =" + destino.getSaldo());
 
         salvarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
@@ -25,7 +25,7 @@ public class TransacaoService {
         if(origem.getSaldo().compareTo(valor) < 0){
             throw new IllegalArgumentException("Saldo insuficiente");
         }
-        origem.decerementarSaldo(valor);
+        origem.subtrairSaldo(valor);
         System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual =" + origem.getSaldo());
         salvarTransacao(new Transacao(origem, null, valor, TipoTransacao.SAQUE));
     }
@@ -40,8 +40,8 @@ public class TransacaoService {
             throw new IllegalArgumentException("Não é possível transferir para uma conta inativa.");
         }
 
-        origem.decerementarSaldo(valor);
-        destino.incrementarSaldo(valor);
+        origem.subtrairSaldo(valor);
+        destino.adicionarSaldo(valor);
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " + destino.getTitular().getNome() +" realizada com sucesso!");
         salvarTransacao(new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA));
     }

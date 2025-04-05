@@ -2,7 +2,6 @@ package org.example.modelo;
 
 import java.math.BigDecimal;
 import java.util.Random;
-import java.util.function.BiFunction;
 
 public class Conta {
 
@@ -18,11 +17,11 @@ public class Conta {
         this.numeroConta = gerarNumeroConta();
     }
 
-    public void incrementarSaldo(BigDecimal valor){
+    public void adicionarSaldo(BigDecimal valor){
         this.saldo = saldo.add(valor);
     }
 
-    public void decerementarSaldo(BigDecimal valor){
+    public void subtrairSaldo(BigDecimal valor){
         this.saldo = saldo.subtract(valor);
     }
 
