@@ -2,8 +2,6 @@ package org.example.modelo;
 
 import java.math.BigDecimal;
 import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Conta {
 
@@ -15,7 +13,7 @@ public class Conta {
     public Conta(Cliente titular){
         this.titular = titular;
         this.saldo = BigDecimal.ZERO;
-        this.status = status.ATIVA;
+        this.status = Status.ATIVA;
         this.numeroConta = gerarNumeroConta();
     }
 
@@ -80,12 +78,12 @@ public class Conta {
 
     public void desativarConta()
     {
-        this.status = status.INATIVA;
+        this.status = Status.INATIVA;
     }
 
     public void ativarConta()
     {
-        this.status = status.ATIVA;
+        this.status = Status.ATIVA;
     }
 
 }

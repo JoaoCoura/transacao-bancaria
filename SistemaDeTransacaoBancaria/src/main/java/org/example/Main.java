@@ -2,11 +2,9 @@ package org.example;
 
 import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
-import org.example.modelo.Transacao;
 import org.example.modelo.TransacaoService;
-
 import java.math.BigDecimal;
-import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
