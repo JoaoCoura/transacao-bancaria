@@ -23,6 +23,12 @@ public class Main {
         gerenciador.sacar(conta1, new BigDecimal("200.00"));
         gerenciador.transferir(conta1, conta2, new BigDecimal("100.00"));
 
+        List<Transacao> historico = conta1.getHistoricoTransferencias();
+        System.out.println("Histórico de Transferências da Conta " + conta1.getNumeroConta() + ":");
+        for (Transacao transacao : historico) {
+            System.out.println(transacao);
+        }
+
         System.out.println(conta1);
         System.out.println(conta2);
 

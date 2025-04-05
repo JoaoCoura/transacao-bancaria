@@ -2,6 +2,8 @@ package org.example.modelo;
 
 import java.math.BigDecimal;
 import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Conta {
 
@@ -9,12 +11,14 @@ public class Conta {
     private BigDecimal saldo;
     private Status status;
     private int numeroConta;
+    private List<Transacao> historicoTransacoes;
 
     public Conta(Cliente titular){
         this.titular = titular;
         this.saldo = BigDecimal.ZERO;
         this.status = status.ATIVA;
         this.numeroConta = gerarNumeroConta();
+        this.historicoTransacoes = new ArrayList<>();
     }
 
     public void adicionarSaldo(BigDecimal valor){
@@ -31,6 +35,10 @@ public class Conta {
 
         numeroConta = random.nextInt(1000000);
         return numeroConta;
+    }
+
+    public List<Transacao> getHistoricoTransferencias() {
+        return historicoTransferencias;
     }
 
     @Override
@@ -73,5 +81,19 @@ public class Conta {
 
     public void setNumeroConta(int numeroConta) {
         this.numeroConta = numeroConta;
+    }
+
+    public void desativarConta()
+    {
+        this.status = status.DESATIVA;
+    }
+
+    public void ativarConta()
+    {
+        this.status = status.ATIVA;
+    }
+
+    public void adicionarTransacao(Transacao transacao) {
+        this.historicoTransacoes.add(transacao);
     }
 }
