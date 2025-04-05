@@ -15,7 +15,6 @@ public class TransacaoService {
         System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual =" + destino.getSaldo());
         Transacao transacao = new Transacao(null, destino, valor, TipoTransacao.DEPOSITO);
         salvarTransacao(transacao);
-        destino.adicionarTransacao(transacao);
     }
 
     public void sacar(Conta origem, BigDecimal valor) {
@@ -30,7 +29,6 @@ public class TransacaoService {
         System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual =" + origem.getSaldo());
         Transacao transacao = new Transacao(origem, null, valor, TipoTransacao.SAQUE);
         salvarTransacao(transacao);
-        origem.adicionarTransacao(transacao);
     }
 
     public void transferir(Conta origem, Conta destino, BigDecimal valor) {
@@ -48,17 +46,26 @@ public class TransacaoService {
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " + destino.getTitular().getNome() +" realizada com sucesso!");
         Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
         salvarTransacao(transacao);
-        destino.adicionarTransacao(transacao);
-        origem.adicionarTransacao(transacao);
     }
 
     public void salvarTransacao(Transacao transacao){
         historicoTransacoes.add(transacao);
     }
 
-    public void exibirHistorico() {
+    public void exibirHistoricoConta(int numeroConta) {
+        System.out.println("Transações da conta " + numeroConta + ":" );
         for (Transacao t : historicoTransacoes) {
-            System.out.println(t);
+            if ((t.getOrigem() != null && t.getOrigem().getNumeroConta() == numeroConta) || (t.getDestino() != null && t.getDestino().getNumeroConta() == numeroConta)){
+                System.out.println(t);
+            }
+        }
+    }
+
+    public void exibirHistorico() {
+        System.out.println("Transações Registradas: ");
+        for (Transacao t : historicoTransacoes) {
+                System.out.println(t);
         }
     }
 }
+

@@ -6,7 +6,6 @@ import org.example.modelo.Transacao;
 import org.example.modelo.TransacaoService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -26,17 +25,14 @@ public class Main {
         gerenciador.sacar(conta1, new BigDecimal("200.00"));
         gerenciador.transferir(conta1, conta2, new BigDecimal("100.00"));
 
-        List<Transacao> historico = conta2.getHistoricoTransacoes();
-        System.out.println("Histórico de Transferências da Conta " + conta2.getNumeroConta() + ":");
-        for (Transacao transacao : historico) {
-            System.out.println(transacao);
-        }
+        gerenciador.depositar(conta2, new BigDecimal("900.00"));
+
 
         System.out.println(conta1);
         System.out.println(conta2);
 
+        gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
         gerenciador.exibirHistorico();
-
 
     }
 

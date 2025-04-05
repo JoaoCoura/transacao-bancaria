@@ -28,4 +28,13 @@ public class Transacao {
                 ", tipo=" + tipo +
                 '}';
     }
+
+    public Conta getOrigem(){
+        return origem;
+    }
+
+    public Conta getDestino(){
+        return destino;
+    }
+
 }

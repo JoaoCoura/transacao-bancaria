@@ -11,14 +11,12 @@ public class Conta {
     private BigDecimal saldo;
     private Status status;
     private int numeroConta;
-    private List<Transacao> historicoTransacoes;
 
     public Conta(Cliente titular){
         this.titular = titular;
         this.saldo = BigDecimal.ZERO;
         this.status = status.ATIVA;
         this.numeroConta = gerarNumeroConta();
-        this.historicoTransacoes = new ArrayList<>();
     }
 
     public void adicionarSaldo(BigDecimal valor){
@@ -37,9 +35,6 @@ public class Conta {
         return numeroConta;
     }
 
-    public List<Transacao> getHistoricoTransacoes() {
-        return historicoTransacoes;
-    }
 
     @Override
     public String toString() {
@@ -93,7 +88,4 @@ public class Conta {
         this.status = status.ATIVA;
     }
 
-    public void adicionarTransacao(Transacao transacao) {
-        this.historicoTransacoes.add(transacao);
-    }
 }
