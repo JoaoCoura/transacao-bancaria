@@ -37,7 +37,7 @@ public class TransacaoService {
             throw new IllegalArgumentException("Não é possível transferir para a mesma conta.");
         }
 
-        if(destino.getStatus() == Status.INATIVA){
+        if(destino.getStatus() == TipoStatus.INATIVA){
             throw new IllegalArgumentException("Não é possível transferir para uma conta inativa.");
         }
 

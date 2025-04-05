@@ -1,6 +1,6 @@
 import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
-import org.example.modelo.Status;
+import org.example.modelo.TipoStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ public class criarContaTest {
         Assertions.assertEquals("123456789", conta.getTitular().getCpf());
         Assertions.assertEquals("fubs@yahoo.com", conta.getTitular().getEmail());
         Assertions.assertEquals(BigDecimal.ZERO, conta.getSaldo());
-        Assertions.assertEquals(Status.ATIVA, conta.getStatus());
+        Assertions.assertEquals(TipoStatus.ATIVA, conta.getStatus());
 
     }
 

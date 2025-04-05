@@ -7,13 +7,13 @@ public class Conta {
 
     private Cliente titular;
     private BigDecimal saldo;
-    private Status status;
+    private TipoStatus status;
     private int numeroConta;
 
     public Conta(Cliente titular){
         this.titular = titular;
         this.saldo = BigDecimal.ZERO;
-        this.status = Status.ATIVA;
+        this.status = TipoStatus.ATIVA;
         this.numeroConta = gerarNumeroConta();
     }
 
@@ -60,11 +60,11 @@ public class Conta {
         this.saldo = saldo;
     }
 
-    public Status getStatus() {
+    public TipoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TipoStatus status) {
         this.status = status;
     }
 
@@ -78,12 +78,12 @@ public class Conta {
 
     public void desativarConta()
     {
-        this.status = Status.INATIVA;
+        this.status = TipoStatus.INATIVA;
     }
 
     public void ativarConta()
     {
-        this.status = Status.ATIVA;
+        this.status = TipoStatus.ATIVA;
     }
 
 }
