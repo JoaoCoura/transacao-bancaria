@@ -37,10 +37,10 @@ public class Conta {
     @Override
     public String toString() {
         return "Conta{" +
-                "titular=" + titular +
-                ", saldo=" + saldo +
-                ", status=" + status +
-                ", numeroConta=" + numeroConta +
+                "titular: " + titular +
+                ", saldo: " + saldo +
+                ", status: " + status +
+                ", numeroConta: " + numeroConta +
                 '}';
     }
 

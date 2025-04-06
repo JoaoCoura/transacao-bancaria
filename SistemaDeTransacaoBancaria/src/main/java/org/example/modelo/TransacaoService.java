@@ -12,7 +12,7 @@ public class TransacaoService {
             throw new IllegalArgumentException("Valor do depósito deve ser positivo.");
         }
         destino.adicionarSaldo(valor);
-        System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual =" + destino.getSaldo());
+        System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual: " + destino.getSaldo());
         Transacao transacao = new Transacao(null, destino, valor, TipoTransacao.DEPOSITO);
         salvarTransacao(transacao);
     }
@@ -26,7 +26,7 @@ public class TransacaoService {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
         origem.subtrairSaldo(valor);
-        System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual =" + origem.getSaldo());
+        System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual: " + origem.getSaldo());
         Transacao transacao = new Transacao(origem, null, valor, TipoTransacao.SAQUE);
         salvarTransacao(transacao);
     }
@@ -43,7 +43,7 @@ public class TransacaoService {
 
         origem.subtrairSaldo(valor);
         destino.adicionarSaldo(valor);
-        System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " + destino.getTitular().getNome() +" realizada com sucesso!");
+        System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " + destino.getTitular().getNome() + " realizada com sucesso!");
         Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
         salvarTransacao(transacao);
     }
@@ -62,7 +62,7 @@ public class TransacaoService {
     }
 
     public void exibirHistorico() {
-        System.out.println("Transações Registradas: ");
+        System.out.println("Transações Registradas:");
         for (Transacao t : historicoTransacoes) {
                 System.out.println(t);
         }

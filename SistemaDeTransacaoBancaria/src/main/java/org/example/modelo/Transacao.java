@@ -21,11 +21,11 @@ public class Transacao {
     @Override
     public String toString() {
         return "Transacao{" +
-                "origem=" + (origem != null ? origem.getNumeroConta() : "N/A") +
-                ", destino=" + (destino != null ? destino.getNumeroConta() : "N/A") +
-                ", valor=" + valor +
-                ", dataHora=" + dataHora +
-                ", tipo=" + tipo +
+                "origem: " + (origem != null ? origem.getNumeroConta() : "N/A") +
+                ", destino: " + (destino != null ? destino.getNumeroConta() : "N/A") +
+                ", valor: " + valor +
+                ", dataHora: " + dataHora +
+                ", tipo: " + tipo +
                 '}';
     }
 
