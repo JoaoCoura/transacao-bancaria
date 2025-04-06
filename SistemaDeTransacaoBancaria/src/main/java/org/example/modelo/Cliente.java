@@ -1,4 +1,5 @@
 package org.example.modelo;
+import static org.example.util.Validator.*;
 
 public class Cliente {
 
@@ -7,6 +8,11 @@ public class Cliente {
     private String email;
 
     public Cliente(String nome, String cpf, String email) {
+
+        requerNaoNulo(nome, "Nome");
+        requerCpfValido(cpf, "CPF");
+        requerEmailValido(email, "Email");
+
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
