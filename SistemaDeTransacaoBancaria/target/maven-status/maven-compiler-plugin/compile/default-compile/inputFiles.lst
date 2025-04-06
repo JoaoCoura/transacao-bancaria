@@ -1,4 +1,7 @@
-C:\Users\Beatriz Rizzo\Documents\MF\BancoTesteMaven\src\main\java\org\example\Main.java
-C:\Users\Beatriz Rizzo\Documents\MF\BancoTesteMaven\src\main\java\org\example\modelo\Cliente.java
-C:\Users\Beatriz Rizzo\Documents\MF\BancoTesteMaven\src\main\java\org\example\modelo\Conta.java
-C:\Users\Beatriz Rizzo\Documents\MF\BancoTesteMaven\src\main\java\org\example\modelo\Status.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\Main.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\Cliente.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\Conta.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\TipoStatus.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\TipoTransacao.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\Transacao.java
+C:\Users\Beatriz Rizzo\Documents\transacao-bancaria\SistemaDeTransacaoBancaria\src\main\java\org\example\modelo\TransacaoService.java

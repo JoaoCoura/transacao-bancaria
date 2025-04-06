@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        Cliente cliente1 = new Cliente("Bia", "123456789", "bia@gmail.com");
-        Cliente cliente2 = new Cliente("Fuba", "789456123", "fubs@gmail.com");
+        Cliente cliente1 = new Cliente("Ocara", "12345678910", "ocara@gmail.com");
+        Cliente cliente2 = new Cliente("Fuba", "78945612310", "fubs@gmail.com");
 
         Conta conta1 = new Conta(cliente1);
         Conta conta2 = new Conta(cliente2);
@@ -29,8 +29,6 @@ public class Main {
         System.out.println(conta1);
         System.out.println(conta2);
 
-        gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
-        gerenciador.exibirHistorico();
 
     }
 

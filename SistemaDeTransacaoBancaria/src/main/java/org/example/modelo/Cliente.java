@@ -9,9 +9,9 @@ public class Cliente {
 
     public Cliente(String nome, String cpf, String email) {
 
-        requerNaoNulo(nome, "Nome");
-        requerCpfValido(cpf, "CPF");
-        requerEmailValido(email, "Email");
+        verificarNaoNulo(nome, "Nome");
+        verificarCpfValido(cpf, "CPF");
+        verificarEmailValido(email, "Email");
 
         this.nome = nome;
         this.cpf = cpf;
