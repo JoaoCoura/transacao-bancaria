@@ -33,7 +33,6 @@ public class Conta {
         return numeroConta;
     }
 
-
     @Override
     public String toString() {
         return "Conta{" +
@@ -85,5 +84,4 @@ public class Conta {
     {
         this.status = TipoStatus.ATIVA;
     }
-
 }
