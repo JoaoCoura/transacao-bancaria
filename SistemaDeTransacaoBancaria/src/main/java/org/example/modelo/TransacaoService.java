@@ -8,6 +8,10 @@ public class TransacaoService {
     private List<Transacao> historicoTransacoes = new ArrayList<>();
 
     public void depositar(Conta destino, BigDecimal valor) {
+        if(destino.getStatus() == TipoStatus.INATIVA){
+            throw new IllegalArgumentException("Não é possível transferir para uma conta inativa.");
+        }
+
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
             throw new IllegalArgumentException("Valor do depósito deve ser positivo.");
         }
@@ -18,7 +22,6 @@ public class TransacaoService {
     }
 
     public void sacar(Conta origem, BigDecimal valor) {
-        //verificar limite da conta e se eh positivo
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
             throw new IllegalArgumentException("Valor do saque deve ser positivo.");
         }

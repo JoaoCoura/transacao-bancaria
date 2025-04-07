@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SaqueTests {
+    /*
     private Conta conta;
 
     @BeforeEach
@@ -16,7 +17,7 @@ public class SaqueTests {
         Cliente cliente = new Cliente("Fuba", "123456789", "fubs@yahoo.com");
         conta = new Conta(cliente);
     }
-    /*
+
     @Test
     public void testSaqueComSucesso(){
         conta.depositar(new BigDecimal("500"));
