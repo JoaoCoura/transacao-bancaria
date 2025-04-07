@@ -3,7 +3,7 @@ package org.example.modelo;
 import java.math.BigDecimal;
 
 public class TransacaoService {
-    //criar variaveis para as mensagens similar ao validator e mensagens com valores
+    //criar variaveis para as mensagens similar ao validator e mensagens com valores (variaveis)
     public void depositar(Conta destino, BigDecimal valor) {
         if(destino.getStatus() == TipoStatus.INATIVA){
             throw new IllegalArgumentException("Não é possível depositar em uma conta inativa.");
