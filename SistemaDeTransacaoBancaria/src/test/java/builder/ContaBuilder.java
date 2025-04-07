@@ -43,12 +43,12 @@ public final class ContaBuilder {
         return this;
     }
 
-    public ContaBuilder comContaAtiva() {
+    public ContaBuilder comStatusAtiva() {
         this.status = TipoStatus.ATIVA;
         return this;
     }
 
-    public ContaBuilder comContaInativa() {
+    public ContaBuilder comStatusInativa() {
         this.status = TipoStatus.INATIVA;
         return this;
     }
