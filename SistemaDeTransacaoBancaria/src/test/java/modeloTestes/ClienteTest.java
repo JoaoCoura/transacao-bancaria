@@ -7,7 +7,7 @@ import builder.ClienteBuilder;
 import com.github.javafaker.Faker;
 import static org.example.util.CpfUtil.gerarCpfValido;
 
-public class ClienteTestes {
+public class ClienteTest {
 
     private static final Faker faker = new Faker();
 
