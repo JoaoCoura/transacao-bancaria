@@ -8,11 +8,6 @@ public class Cliente {
     private String email;
 
     public Cliente(String nome, String cpf, String email) {
-
-        verificarNaoNulo(nome, "Nome");
-        verificarCpfValido(cpf, "CPF");
-        verificarEmailValido(email, "Email");
-
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;

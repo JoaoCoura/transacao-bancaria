@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.modelo.CadastroCliente;
 import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
 import org.example.modelo.TransacaoService;
@@ -8,8 +9,9 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        Cliente cliente1 = new Cliente("Ocara", "12345678910", "ocara@gmail.com");
-        Cliente cliente2 = new Cliente("Fuba", "78945612310", "fubs@gmail.com");
+        CadastroCliente cadastro = new CadastroCliente();
+        Cliente cliente1 = cadastro.cadastrarCliente("Ocara", "12345678910", "ocara@gmail.com");
+        Cliente cliente2 = cadastro.cadastrarCliente("Fuba", "78945612310", "fubs@gmail.com");
 
         Conta conta1 = new Conta(cliente1);
         Conta conta2 = new Conta(cliente2);
