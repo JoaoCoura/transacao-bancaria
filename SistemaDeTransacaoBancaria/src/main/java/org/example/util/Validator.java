@@ -10,24 +10,24 @@ public class Validator {
         }
     }
 
-    public static void verificarEmailValido(String email, String campo)
+    public static void verificarEmailValido(String email, String nomeDoCampo)
     {
-        verificarNaoNulo(email, campo);
+        verificarNaoNulo(email, nomeDoCampo);
 
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         boolean valido = Pattern.matches(regex, email);
 
         if (!valido) {
-            throw new IllegalArgumentException(campo + " está em formato inválido.");
+            throw new IllegalArgumentException(nomeDoCampo + " está em formato inválido.");
         }
     }
 
-    public static void verificarCpfValido(String cpf, String campo)
+    public static void verificarCpfValido(String cpf, String nomeDoCampo)
     {
-        verificarNaoNulo(cpf, campo);
+        verificarNaoNulo(cpf, nomeDoCampo);
 
         if (!cpf.matches("\\d{11}")) {
-            throw new IllegalArgumentException(campo + " deve conter exatamente 11 dígitos numéricos.");
+            throw new IllegalArgumentException(nomeDoCampo + " deve conter exatamente 11 dígitos numéricos.");
         }
     }
 }

@@ -32,7 +32,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_SemNome_DeveRetornarErroSobreNomeNulo()
+    public void cadastrarCliente_SemNome_DeveRetornarErroSobreNomeNulo()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -43,7 +43,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente cliente = cadastro.cadastrarCliente(nome, cpf, email);
+            cadastro.cadastrarCliente(nome, cpf, email);
         });
 
         // Assert
@@ -51,7 +51,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_SemCPF_DeveRetornarErroSobreCPFNulo()
+    public void cadastrarCliente_SemCPF_DeveRetornarErroSobreCPFNulo()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -62,7 +62,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente cliente = cadastro.cadastrarCliente(nome, cpf, email);
+            cadastro.cadastrarCliente(nome, cpf, email);
         });
 
         // Assert
@@ -70,7 +70,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_SemEmail_DeveRetornarErroSobreEmailNulo()
+    public void cadastrarCliente_SemEmail_DeveRetornarErroSobreEmailNulo()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -81,7 +81,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente cliente = cadastro.cadastrarCliente(nome, cpf, email);
+            cadastro.cadastrarCliente(nome, cpf, email);
         });
 
         // Assert
@@ -89,7 +89,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_ComEmailSemFormatacao_DeveRetornarErroSobreEmailComFormatacaoErrada()
+    public void cadastrarCliente_ComEmailSemFormatacao_DeveRetornarErroSobreEmailComFormatacaoErrada()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -100,7 +100,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente cliente = cadastro.cadastrarCliente(nome, cpf, emailErrado);
+            cadastro.cadastrarCliente(nome, cpf, emailErrado);
         });
 
         // Assert
@@ -108,7 +108,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_CPFComMenosDe11Digitos_DeveRetornarErroSobreCPFComFormatacaoErrada()
+    public void cadastrarCliente_CPFComMenosDe11Digitos_DeveRetornarErroSobreCPFComFormatacaoErrada()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -119,7 +119,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente cliente = cadastro.cadastrarCliente(nome, cpfErrado, email);
+            cadastro.cadastrarCliente(nome, cpfErrado, email);
         });
 
         // Assert
@@ -127,7 +127,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_CPFJaCadastrado_DeveRetornarErroSobreCPFJaCadastrado()
+    public void cadastrarCliente_CPFJaCadastrado_DeveRetornarErroSobreCPFJaCadastrado()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -136,7 +136,7 @@ public class CadastroClienteTest {
         String cpf = gerarCpfValido();
         String email = faker.internet().emailAddress();
 
-        Cliente cliente = cadastro.cadastrarCliente(nome, cpf, email);
+        cadastro.cadastrarCliente(nome, cpf, email);
 
         String outroNome = faker.name().fullName();
         String mesmoCpf = cpf;
@@ -144,7 +144,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente novoCliente = cadastro.cadastrarCliente(outroNome, mesmoCpf, outroEmail);
+            cadastro.cadastrarCliente(outroNome, mesmoCpf, outroEmail);
         });
 
         // Assert
@@ -152,7 +152,7 @@ public class CadastroClienteTest {
     }
 
     @Test
-    public void criarCliente_EmailJaCadastrado_DeveRetornarErroSobreEmailJaCadastrado()
+    public void cadastrarCliente_EmailJaCadastrado_DeveRetornarErroSobreEmailJaCadastrado()
     {
         // Arrange
         CadastroCliente cadastro = new CadastroCliente();
@@ -161,7 +161,7 @@ public class CadastroClienteTest {
         String cpf = gerarCpfValido();
         String email = faker.internet().emailAddress();
 
-        Cliente cliente = cadastro.cadastrarCliente(nome, cpf, email);
+        cadastro.cadastrarCliente(nome, cpf, email);
 
         String outroNome = faker.name().fullName();
         String outroCPF = gerarCpfValido();
@@ -169,7 +169,7 @@ public class CadastroClienteTest {
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Cliente novoCliente = cadastro.cadastrarCliente(outroNome, outroCPF, mesmoEmail);
+            cadastro.cadastrarCliente(outroNome, outroCPF, mesmoEmail);
         });
 
         // Assert
