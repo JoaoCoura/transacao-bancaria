@@ -60,7 +60,7 @@ public class TransacaoServiceTest {
     }
 
     @Test
-    public void depositar_ContaInativaEComSucessoEComSaldo_DeveRetornarErroSobreContaInativaENaoRealizarOperacao()
+    public void depositar_ContaInativa_DeveRetornarErroSobreContaInativaENaoRealizarOperacao()
     {
         // Arrange
         TransacaoService gerenciador = new TransacaoService();
