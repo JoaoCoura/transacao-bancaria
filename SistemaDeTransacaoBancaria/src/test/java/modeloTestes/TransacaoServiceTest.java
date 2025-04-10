@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TransacaoServiceTest {
 
@@ -430,7 +431,7 @@ public class TransacaoServiceTest {
         BigDecimal saldoContaOrigem = contaOrigem.getSaldo();
         BigDecimal saldoContaDestino = contaDestino.getSaldo();
 
-        BigDecimal valorTransferencia = contaOrigem.getSaldo().add(BigDecimal.ONE);
+        BigDecimal valorTransferencia = contaOrigem.getSaldo().add(contaOrigem.getLimite().setScale(2, RoundingMode.HALF_UP));
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {

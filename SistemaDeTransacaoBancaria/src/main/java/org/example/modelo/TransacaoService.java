@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class TransacaoService {
     //criar variaveis para as mensagens similar ao validator e mensagens com valores (variaveis)
     public void depositar(Conta destino, BigDecimal valor) {
-        
+
         if(destino.getStatus() == TipoStatus.INATIVA){
             throw new IllegalArgumentException("Não é possível depositar em uma conta inativa.");
         }
@@ -32,7 +32,7 @@ public class TransacaoService {
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException("O valor do depósito deve ter no máximo 2 casas decimais.");
+            throw new IllegalArgumentException("O valor do saque deve ter no máximo 2 casas decimais.");
         }
 
         if(origem.getSaldo().compareTo(valor) < 0){
@@ -62,7 +62,7 @@ public class TransacaoService {
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException("O valor do depósito deve ter no máximo 2 casas decimais.");
+            throw new IllegalArgumentException("O valor da transferência deve ter no máximo 2 casas decimais.");
         }
 
         if(origem.getLimite().compareTo(valor) == -1){
