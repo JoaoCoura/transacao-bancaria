@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import static org.example.modelo.TransacaoService.*;
 
 public class TransacaoServiceTest {
 
@@ -82,7 +83,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Não é possível depositar em uma conta inativa.", exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_DEPOSITAR_CONTA_INATIVA, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -108,7 +109,33 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Valor do depósito deve ser positivo.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "depósito")), exception.getMessage());
+        Assertions.assertEquals(saldoConta, conta.getSaldo());
+    }
+
+    @Test
+    public void depositar_ValorDepositoComMaisDeDuasCasasDecimais_DeveRetornarErroSobreCasasDecimaisENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta conta = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoConta = conta.getSaldo();
+
+        BigDecimal valorDeposito = BigDecimal
+                .valueOf(faker.number().randomDouble(2, 0, 1000))
+                .divide(BigDecimal.valueOf(1000), 3, RoundingMode.HALF_UP);
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.depositar(conta, valorDeposito);
+        });
+
+        // Assert
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "depósito")), exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -155,7 +182,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Não é possível sacar de uma conta inativa.", exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_SACAR_CONTA_INATIVA, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -179,7 +206,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Saldo insuficiente.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, conta.getSaldo().doubleValue())), exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -204,7 +231,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Saldo insuficiente.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, conta.getSaldo().doubleValue())), exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -230,7 +257,33 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Valor do saque deve ser positivo.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "saque")), exception.getMessage());
+        Assertions.assertEquals(saldoConta, conta.getSaldo());
+    }
+
+    @Test
+    public void sacar_ValorSaqueComMaisDeDuasCasasDecimais_DeveRetornarErroSobreCasasDecimaisENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta conta = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoConta = conta.getSaldo();
+
+        BigDecimal valorSaque = BigDecimal
+                .valueOf(faker.number().randomDouble(2, 0, 1000))
+                .divide(BigDecimal.valueOf(1000), 3, RoundingMode.HALF_UP);
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.sacar(conta, valorSaque);
+        });
+
+        // Assert
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "saque")), exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -285,7 +338,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Não é possível transferir para a mesma conta.", exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_PROPRIA_CONTA, exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
     }
 
@@ -315,7 +368,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Não é possível transferir de uma conta inativa.", exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_CONTA_INATIVA_ORIGEM, exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }
@@ -346,7 +399,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Não é possível transferir para uma conta inativa.", exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_CONTA_INATIVA_DESTINO, exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }
@@ -378,7 +431,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Valor da transferência deve ser positivo.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "a", "transferência")), exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }
@@ -408,13 +461,13 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Saldo insuficiente.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, contaOrigem.getSaldo().doubleValue())), exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }
 
     @Test
-    public void transferir_SaldoInsuficiente_DeveRetornarErroSobreSaldoInsuficienteENaoRealizarOperacao()
+    public void transferir_LimiteInsuficiente_DeveRetornarErroSobreLimiteInsuficienteENaoRealizarOperacao()
     {
         // Arrange
         TransacaoService gerenciador = new TransacaoService();
@@ -431,7 +484,7 @@ public class TransacaoServiceTest {
         BigDecimal saldoContaOrigem = contaOrigem.getSaldo();
         BigDecimal saldoContaDestino = contaDestino.getSaldo();
 
-        BigDecimal valorTransferencia = contaOrigem.getSaldo().add(contaOrigem.getLimite().setScale(2, RoundingMode.HALF_UP));
+        BigDecimal valorTransferencia = contaOrigem.getSaldo().multiply(BigDecimal.TWO);
 
         // Act
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -439,7 +492,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals("Saldo insuficiente.", exception.getMessage());
+        Assertions.assertEquals((String.format(MENSAGEM_ERRO_LIMITE, contaOrigem.getLimite().doubleValue())), exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }

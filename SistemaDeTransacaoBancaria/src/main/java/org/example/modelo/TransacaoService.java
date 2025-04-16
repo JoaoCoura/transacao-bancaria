@@ -3,70 +3,84 @@ package org.example.modelo;
 import java.math.BigDecimal;
 
 public class TransacaoService {
-    //criar variaveis para as mensagens similar ao validator e mensagens com valores (variaveis)
+    public static final String MENSAGEM_ERRO_DEPOSITAR_CONTA_INATIVA = "Não é possível depositar em uma conta inativa.";
+    public static final String MENSAGEM_ERRO_SACAR_CONTA_INATIVA = "Não é possível sacar de uma conta inativa.";
+    public static final String MENSAGEM_ERRO_CONTA_INATIVA_ORIGEM = "Não é possível transferir de uma conta inativa.";
+    public static final String MENSAGEM_ERRO_CONTA_INATIVA_DESTINO = "Não é possível transferir para uma conta inativa.";
+    public static final String MENSAGEM_ERRO_VALOR_NEGATIVO = "Valor d%s %s deve ser positivo.";
+    public static final String MENSAGEM_ERRO_CASAS_DECIMAIS = "Valor d%s %s deve ter no máximo 2 casas decimais.";
+    public static final String MENSAGEM_ERRO_SALDO_INSUFICIENTE = "Saldo insuficiente. Saldo Atual R$%.2f."; // quando usar moeda, moeda como variavel
+    public static final String MENSAGEM_ERRO_PROPRIA_CONTA = "Não é possível transferir para a mesma conta.";
+    public static final String MENSAGEM_ERRO_LIMITE = "Limite insuficiente. Limite Atual R$%.2f.";
+    public static final String MENSAGEM_SUCESSO = "%s de R$%.2f realizado com sucesso. Saldo atual: R$%.2f.";
+
     public void depositar(Conta destino, BigDecimal valor) {
 
         if(destino.getStatus() == TipoStatus.INATIVA){
-            throw new IllegalArgumentException("Não é possível depositar em uma conta inativa.");
+            throw new IllegalArgumentException(MENSAGEM_ERRO_DEPOSITAR_CONTA_INATIVA);
         }
 
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Valor do depósito deve ser positivo.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "depósito"));
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException("O valor do depósito deve ter no máximo 2 casas decimais.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "depósito"));
         }
 
         destino.adicionarSaldo(valor);
-        System.out.println("Depósito de R$" + valor + " realizado com sucesso. Saldo atual: " + destino.getSaldo());
+        System.out.printf((MENSAGEM_SUCESSO) + "%n", "Depósito", valor.doubleValue(), destino.getSaldo().doubleValue());
     }
 
     public void sacar(Conta origem, BigDecimal valor) {
         if (origem.getStatus() == TipoStatus.INATIVA){
-            throw new IllegalArgumentException("Não é possível sacar de uma conta inativa.");
+            throw new IllegalArgumentException(MENSAGEM_ERRO_SACAR_CONTA_INATIVA);
         }
 
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Valor do saque deve ser positivo.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "saque"));
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException("O valor do saque deve ter no máximo 2 casas decimais.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "saque"));
         }
 
         if(origem.getSaldo().compareTo(valor) < 0){
-            throw new IllegalArgumentException("Saldo insuficiente.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, origem.getSaldo().doubleValue()));
         }
 
         origem.subtrairSaldo(valor);
-        System.out.println("Saque de R$" + valor + " realizado com sucesso. Saldo atual: " + origem.getSaldo());
+        System.out.printf((MENSAGEM_SUCESSO) + "%n", "Saque", valor.doubleValue(), origem.getSaldo().doubleValue());
     }
 
     public void transferir(Conta origem, Conta destino, BigDecimal valor) {
 
         if (destino.getNumeroConta() == origem.getNumeroConta()) {
-            throw new IllegalArgumentException("Não é possível transferir para a mesma conta.");
+            throw new IllegalArgumentException(MENSAGEM_ERRO_PROPRIA_CONTA);
         }
 
         if (origem.getStatus() == TipoStatus.INATIVA){
-            throw new IllegalArgumentException("Não é possível transferir de uma conta inativa.");
+            throw new IllegalArgumentException(MENSAGEM_ERRO_CONTA_INATIVA_ORIGEM);
         }
 
         if(destino.getStatus() == TipoStatus.INATIVA){
-            throw new IllegalArgumentException("Não é possível transferir para uma conta inativa.");
+            throw new IllegalArgumentException(MENSAGEM_ERRO_CONTA_INATIVA_DESTINO);
         }
 
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException("Valor da transferência deve ser positivo.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "a", "transferência"));
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException("O valor da transferência deve ter no máximo 2 casas decimais.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "a", "transferência"));
+        }
+
+        if (origem.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, origem.getSaldo().doubleValue()));
         }
 
         if(origem.getLimite().compareTo(valor) == -1){
-            throw new IllegalArgumentException("Saldo insuficiente.");
+            throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, origem.getLimite().doubleValue()));
         }
 
         origem.subtrairSaldo(valor);

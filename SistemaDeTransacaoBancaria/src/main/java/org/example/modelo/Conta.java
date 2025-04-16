@@ -24,12 +24,12 @@ public class Conta {
 
     public void adicionarSaldo(BigDecimal valor){
         this.saldo = saldo.add(valor);
-        this.limite = limiteConta(tipo, saldo); // atualiza o limite
+        this.limite = limiteConta(tipo, saldo);
     }
 
     public void subtrairSaldo(BigDecimal valor){
         this.saldo = saldo.subtract(valor);
-        this.limite = limiteConta(tipo, saldo); // atualiza o limite
+        this.limite = limiteConta(tipo, saldo);
     }
 
     /*public int gerarNumeroConta(){
@@ -144,9 +144,8 @@ public class Conta {
                 break;
         }
     
-        BigDecimal limite_conta = saldo.add(limite_base); // aqui sim pode somar o saldo real (mesmo se for negativo)
-    
-        // Garante que o limite total nunca fique negativo
+        BigDecimal limite_conta = saldo.add(limite_base);
+
         return limite_conta.max(BigDecimal.ZERO);
     }
 }
