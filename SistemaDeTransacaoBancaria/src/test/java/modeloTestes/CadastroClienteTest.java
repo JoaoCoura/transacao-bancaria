@@ -5,6 +5,7 @@ import org.example.modelo.CadastroCliente;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.github.javafaker.Faker;
+import java.util.UUID;
 import static org.example.util.CpfUtil.gerarCpfValido;
 
 public class CadastroClienteTest {
@@ -86,6 +87,30 @@ public class CadastroClienteTest {
 
         // Assert
         Assertions.assertEquals("Email não pode ser nulo.", exception.getMessage());
+    }
+
+    @Test
+    public void cadastrarCliente_ComEmailComMaisDe257Caracteres_DeveRetornarErroSobreEmailComFormatacaoErrada()
+    {
+        // Arrange
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 258) {
+            sb.append(UUID.randomUUID());
+        }
+
+        CadastroCliente cadastro = new CadastroCliente();
+
+        String nome = faker.name().fullName();;
+        String cpf = gerarCpfValido();
+        String emailErrado = sb.substring(0, 258);
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            cadastro.cadastrarCliente(nome, cpf, emailErrado);
+        });
+
+        // Assert
+        Assertions.assertEquals("Email deve ter no máximo 257 caracteres.", exception.getMessage());
     }
 
     @Test

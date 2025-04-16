@@ -14,6 +14,10 @@ public class Validator {
     {
         verificarNaoNulo(email, nomeDoCampo);
 
+        if (email.length() > 257) {
+            throw new IllegalArgumentException(nomeDoCampo + " deve ter no máximo 257 caracteres.");
+        }
+
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         boolean valido = Pattern.matches(regex, email);
 
