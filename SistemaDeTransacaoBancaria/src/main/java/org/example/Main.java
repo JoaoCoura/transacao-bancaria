@@ -33,7 +33,7 @@ public class Main {
         //gerenciador.transferir(conta1, conta2, new BigDecimal("300.00"));
         System.out.println(conta1.getSaldo());
         System.out.println(conta1.getLimite());
-        System.out.println(conta1.getTipo());
+        System.out.println(conta1.getConta());
 
 
         System.out.println(conta1);
