@@ -11,7 +11,7 @@ public final class ContaBuilder {
     private Cliente titular;
     private BigDecimal saldo;
     private BigDecimal limite;
-    private TipoConta tipo;
+    private TipoConta conta;
     private TipoStatus status;
     private int numeroConta;
 
@@ -19,7 +19,7 @@ public final class ContaBuilder {
         this.titular = ClienteBuilder.novoCliente().build();
         this.saldo = BigDecimal.ZERO;
         this.limite = BigDecimal.ZERO;
-        this.tipo = TipoConta.COMUM;
+        this.conta = TipoConta.COMUM;
         this.status = TipoStatus.ATIVA;
         this.numeroConta = new Conta(titular).getNumeroConta();
     }
@@ -58,43 +58,32 @@ public final class ContaBuilder {
         return this;
     }
 
+    public ContaBuilder comTipoComum() {
+        this.conta = TipoConta.COMUM;
+        return this;
+    }
+
+    public ContaBuilder comTipoSilver() {
+        this.conta = TipoConta.SILVER;
+        return this;
+    }
+
+    public ContaBuilder comTipoGold() {
+        this.conta = TipoConta.GOLD;
+        return this;
+    }
+
+    public ContaBuilder comTipoDiamond() {
+        this.conta = TipoConta.DIAMOND;
+        return this;
+    }
+
     public Conta build() {
         Conta conta = new Conta(titular);
         conta.setSaldo(saldo);
         conta.setStatus(status);
         conta.setNumeroConta(numeroConta);
-        conta.setLimite(limiteConta(tipo, saldo));
+        conta.setLimite(Conta.limiteConta(this.conta, saldo));
         return conta;
-    }
-
-    private BigDecimal limiteConta(TipoConta tipo, BigDecimal saldo){
-
-        BigDecimal limite_base;
-
-        switch (tipo) {
-            case COMUM:
-                limite_base = saldo.multiply(new BigDecimal("0.5"));
-                break;
-
-            case SILVER:
-                limite_base = saldo.multiply(new BigDecimal("0.8"));
-                break;
-
-            case GOLD:
-                limite_base = saldo.multiply(new BigDecimal("1.1"));
-                break;
-
-            case DIAMOND:
-                limite_base = saldo.multiply(new BigDecimal("2"));
-                break;
-
-            default:
-                limite_base = BigDecimal.ZERO;
-                break;
-        }
-
-        BigDecimal limite_conta = saldo.add(limite_base);
-
-        return limite_conta.max(BigDecimal.ZERO);
     }
 }
