@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import static org.example.modelo.TransacaoService.*;
+import static org.example.util.MensagensTransacao.*;
 
 public class TransacaoServiceTest {
 
@@ -109,7 +109,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "depósito")), exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -135,7 +135,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals((String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "depósito")), exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_CASAS_DECIMAIS, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -257,7 +257,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "o", "saque")), exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -283,7 +283,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals((String.format(MENSAGEM_ERRO_CASAS_DECIMAIS, "o", "saque")), exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_CASAS_DECIMAIS, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -431,7 +431,7 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals((String.format(MENSAGEM_ERRO_VALOR_NEGATIVO, "a", "transferência")), exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }
