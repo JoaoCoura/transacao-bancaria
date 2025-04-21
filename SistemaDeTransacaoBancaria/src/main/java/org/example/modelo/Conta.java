@@ -23,7 +23,7 @@ public class Conta {
         this.limite = limiteConta(conta, saldo);
     }
 
-    public void adicionarSaldo(BigDecimal valor){
+    private void validarValor(BigDecimal valor) {
         if(valor.compareTo(BigDecimal.ZERO) <= 0){
             throw new IllegalArgumentException(MENSAGEM_ERRO_VALOR_NEGATIVO);
         }
@@ -31,19 +31,16 @@ public class Conta {
         if (valor.scale() > 2) {
             throw new IllegalArgumentException(MENSAGEM_ERRO_CASAS_DECIMAIS);
         }
+    }
 
+    public void adicionarSaldo(BigDecimal valor){
+        validarValor(valor);
         this.saldo = saldo.add(valor);
         this.limite = limiteConta(conta, saldo);
     }
 
     public void subtrairSaldo(BigDecimal valor, TipoTransacao transacao){
-        if(valor.compareTo(BigDecimal.ZERO) <= 0){
-            throw new IllegalArgumentException(MENSAGEM_ERRO_VALOR_NEGATIVO);
-        }
-
-        if (valor.scale() > 2) {
-            throw new IllegalArgumentException(MENSAGEM_ERRO_CASAS_DECIMAIS);
-        }
+        validarValor(valor);
 
         if (transacao == TipoTransacao.TRANSFERENCIA){
             if (this.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
@@ -64,14 +61,6 @@ public class Conta {
         this.saldo = saldo.subtract(valor);
         this.limite = limiteConta(conta, saldo);
     }
-
-    /*public int gerarNumeroConta(){
-        Random random = new Random();
-        int numeroConta;
-
-        numeroConta = random.nextInt(1000000);
-        return numeroConta;
-    }*/
 
     public int gerarNumeroConta() {
         return numeroContaAtual++;
