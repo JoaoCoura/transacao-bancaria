@@ -1,6 +1,10 @@
 package org.example.modelo;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.example.util.MensagensTransacao.*;
 
@@ -14,6 +18,8 @@ public class Conta {
     private int numeroConta;
     private static int numeroContaAtual = 1;
 
+    private Set<Conta> contatos;
+
     public Conta(Cliente titular){
         this.titular = titular;
         this.saldo = BigDecimal.ZERO;
@@ -21,6 +27,28 @@ public class Conta {
         this.numeroConta = gerarNumeroConta();
         tipoConta(TipoConta.COMUM);
         this.limite = limiteConta(conta, saldo);
+
+        this.contatos = new HashSet<>();
+    }
+
+    public boolean adicionarContato(Conta conta) {
+        boolean adicionado = contatos.add(conta);
+        if (adicionado) {
+            System.out.println("Contato adicionado com sucesso.");
+        } else {
+            System.out.println("Contato já existe.");
+        }
+        return adicionado;
+    }
+
+    public boolean removerContato(Conta conta) {
+        boolean removido = contatos.remove(conta);
+        if (removido) {
+            System.out.println("Contato removido com sucesso.");
+        } else {
+            System.out.println("Contato não encontrado.");
+        }
+        return removido;
     }
 
     private void validarValor(BigDecimal valor) {
@@ -138,6 +166,10 @@ public class Conta {
 
     public void tipoConta(TipoConta tipo){
         this.conta = tipo;
+    }
+
+    public Set<Conta> getContatos() {
+        return contatos;
     }
 
     public static BigDecimal limiteConta(TipoConta tipo, BigDecimal saldo){

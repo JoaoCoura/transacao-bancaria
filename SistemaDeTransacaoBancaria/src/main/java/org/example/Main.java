@@ -5,6 +5,7 @@ import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
 import org.example.modelo.TransacaoService;
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 
 
 public class Main {
@@ -26,6 +27,10 @@ public class Main {
         gerenciador.transferir(conta1, conta2, new BigDecimal("100.00"));
 
         gerenciador.depositar(conta2, new BigDecimal("900.00"));
+
+
+        System.out.println("Historico de Transacoes do Ocara: ");
+        gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
         
 
 
