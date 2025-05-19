@@ -32,6 +32,9 @@ public class Main {
         System.out.println("Historico de Transacoes do Ocara: ");
         gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
 
+        System.out.println(conta1.getLimite());
+        System.out.println(conta1.getLimiteContato());
+
         conta1.adicionarContato(conta2);
         conta1.adicionarContato(conta1);
 
