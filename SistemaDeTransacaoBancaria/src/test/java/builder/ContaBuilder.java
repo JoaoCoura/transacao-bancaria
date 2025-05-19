@@ -84,6 +84,7 @@ public final class ContaBuilder {
         conta.setStatus(status);
         conta.setNumeroConta(numeroConta);
         conta.setLimite(Conta.limiteConta(this.conta, saldo));
+        conta.setLimiteContato(Conta.limiteConta(this.conta, saldo));
         return conta;
     }
 }

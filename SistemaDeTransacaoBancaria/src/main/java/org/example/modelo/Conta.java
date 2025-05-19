@@ -13,6 +13,7 @@ public class Conta {
     private Cliente titular;
     private BigDecimal saldo;
     private BigDecimal limite;
+    private BigDecimal limiteContato;
     private TipoConta conta;
     private TipoStatus status;
     private int numeroConta;
@@ -27,28 +28,34 @@ public class Conta {
         this.numeroConta = gerarNumeroConta();
         tipoConta(TipoConta.COMUM);
         this.limite = limiteConta(conta, saldo);
-
+        this.limiteContato = limiteContaContato(conta, saldo);
         this.contatos = new HashSet<>();
     }
 
-    public boolean adicionarContato(Conta conta) {
+    public void adicionarContato(Conta conta) {
         boolean adicionado = contatos.add(conta);
         if (adicionado) {
             System.out.println("Contato adicionado com sucesso.");
         } else {
             System.out.println("Contato já existe.");
         }
-        return adicionado;
     }
 
-    public boolean removerContato(Conta conta) {
+    public void removerContato(Conta conta) {
         boolean removido = contatos.remove(conta);
         if (removido) {
             System.out.println("Contato removido com sucesso.");
         } else {
             System.out.println("Contato não encontrado.");
         }
-        return removido;
+    }
+
+    public void mostrarContatos()
+    {
+        for (Conta conta : contatos )
+        {
+            System.out.println(conta);
+        }
     }
 
     private void validarValor(BigDecimal valor) {
@@ -65,18 +72,29 @@ public class Conta {
         validarValor(valor);
         this.saldo = saldo.add(valor);
         this.limite = limiteConta(conta, saldo);
+        this.limiteContato = limiteContaContato(conta, saldo);
     }
 
-    public void subtrairSaldo(BigDecimal valor, TipoTransacao transacao){
+    public void subtrairSaldo(BigDecimal valor, TipoTransacao transacao) {
+        subtrairSaldo(valor, transacao, false);
+    }
+
+    public void subtrairSaldo(BigDecimal valor, TipoTransacao transacao, boolean isContato){
         validarValor(valor);
 
         if (transacao == TipoTransacao.TRANSFERENCIA){
             if (this.getSaldo().compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, this.getSaldo().doubleValue()));
             }
-
-            if(this.getLimite().compareTo(valor) == -1){
-                throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, this.getLimite().doubleValue()));
+            if(isContato){
+                if(this.getLimiteContato().compareTo(valor) == -1){
+                    throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, this.getLimite().doubleValue()));
+                }
+            }
+            else {
+                if(this.getLimite().compareTo(valor) == -1){
+                    throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, this.getLimite().doubleValue()));
+                }
             }
         }
 
@@ -88,6 +106,7 @@ public class Conta {
 
         this.saldo = saldo.subtract(valor);
         this.limite = limiteConta(conta, saldo);
+        this.limiteContato = limiteContaContato(conta, saldo);
     }
 
     public int gerarNumeroConta() {
@@ -100,6 +119,7 @@ public class Conta {
                 "titular: " + titular +
                 ", saldo: " + saldo +
                 ", limite:" + limite +
+                ", limiteContato:" + limiteContato +
                 ", status: " + status +
                 ", numeroConta: " + numeroConta +
                 ", tipo: " + conta +
@@ -128,6 +148,14 @@ public class Conta {
 
     public void setLimite(BigDecimal limite) {
         this.limite = limite;
+    }
+
+    public BigDecimal getLimiteContato(){
+        return limiteContato;
+    }
+
+    public void setLimiteContato(BigDecimal limiteContato) {
+        this.limiteContato = limiteContato;
     }
 
     public TipoConta getConta(){
@@ -179,6 +207,20 @@ public class Conta {
             case SILVER -> saldo.multiply(new BigDecimal("0.8"));
             case GOLD -> saldo.multiply(new BigDecimal("1.1"));
             case DIAMOND -> saldo.multiply(new BigDecimal("2"));
+        };
+
+        BigDecimal limite_conta = saldo.add(limite_base);
+
+        return limite_conta.max(BigDecimal.ZERO);
+    }
+
+    public static BigDecimal limiteContaContato(TipoConta tipo, BigDecimal saldo){
+
+        BigDecimal limite_base = switch (tipo) {
+            case COMUM -> saldo.multiply(new BigDecimal("0.8"));
+            case SILVER -> saldo.multiply(new BigDecimal("1.1"));
+            case GOLD -> saldo.multiply(new BigDecimal("2"));
+            case DIAMOND -> saldo.multiply(new BigDecimal("4"));
         };
 
         BigDecimal limite_conta = saldo.add(limite_base);

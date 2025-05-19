@@ -43,7 +43,9 @@ public class TransacaoService {
             throw new IllegalArgumentException(MENSAGEM_ERRO_CONTA_INATIVA_DESTINO);
         }
 
-        origem.subtrairSaldo(valor, TipoTransacao.TRANSFERENCIA);
+        boolean isContato = origem.getContatos().contains(destino);
+
+        origem.subtrairSaldo(valor, TipoTransacao.TRANSFERENCIA, isContato);
         destino.adicionarSaldo(valor);
         historicoTransacoes.add(new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA));
 

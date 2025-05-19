@@ -31,18 +31,24 @@ public class Main {
 
         System.out.println("Historico de Transacoes do Ocara: ");
         gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
-        
+
+        conta1.adicionarContato(conta2);
+        conta1.adicionarContato(conta1);
+
+        gerenciador.transferir(conta1, conta2, new BigDecimal("360.00"));
+
+        conta1.mostrarContatos();
 
 
         // teste limite
         //gerenciador.transferir(conta1, conta2, new BigDecimal("300.00"));
-        System.out.println(conta1.getSaldo());
-        System.out.println(conta1.getLimite());
-        System.out.println(conta1.getConta());
+        //System.out.println(conta1.getSaldo());
+        //System.out.println(conta1.getLimite());
+        //System.out.println(conta1.getConta());
 
 
-        System.out.println(conta1);
-        System.out.println(conta2);
+        //System.out.println(conta1);
+        //System.out.println(conta2);
 
 
     }
