@@ -28,13 +28,13 @@ public class Main {
 
         gerenciador.depositar(conta2, new BigDecimal("900.00"));
 
-
         System.out.println("Historico de Transacoes do Ocara: ");
-        gerenciador.exibirHistoricoConta(conta1.getNumeroConta());
+        conta1.imprimirHistoricoTransacoes();
 
         System.out.println(conta1.getLimite());
         System.out.println(conta1.getLimiteContato());
-
+        System.out.println(conta1);
+        System.out.println(conta2);
         conta1.adicionarContato(conta2);
         conta1.adicionarContato(conta1);
 
@@ -42,12 +42,22 @@ public class Main {
 
         conta1.mostrarContatos();
 
+        //transferenica invalida, uma vez que a conta1 esta com saldo negativo
+        //gerenciador.transferir(conta1, conta2, new BigDecimal("360.00"));
+
+        gerenciador.depositar(conta1, new BigDecimal("200.00"));
+        System.out.println(conta1);
+
+        //acima do limite, deve bloquear
+        gerenciador.transferir(conta1, conta2, new BigDecimal("130.00"));
+        System.out.println(conta1);
+
 
         // teste limite
         //gerenciador.transferir(conta1, conta2, new BigDecimal("300.00"));
         //System.out.println(conta1.getSaldo());
         //System.out.println(conta1.getLimite());
-        //System.out.println(conta1.getConta());
+        //System.out.println(conta1.getTipoConta());
 
 
         //System.out.println(conta1);

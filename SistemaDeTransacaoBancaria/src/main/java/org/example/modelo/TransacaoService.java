@@ -7,7 +7,6 @@ import java.util.List;
 import static org.example.util.MensagensTransacao.*;
 
 public class TransacaoService {
-    private List<Transacao> historicoTransacoes = new ArrayList<>();
 
     public void depositar(Conta destino, BigDecimal valor) {
         if(destino.getStatus() == TipoStatus.INATIVA){
@@ -15,7 +14,12 @@ public class TransacaoService {
         }
 
         destino.adicionarSaldo(valor);
-        historicoTransacoes.add(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
+        destino.adicionarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
+
+
+        destino.incrementarTransacoesEfetuadas();
+        destino.verificarTipoConta();
+
         System.out.printf((MENSAGEM_SUCESSO) + "%n", "Depósito", valor.doubleValue(), destino.getSaldo().doubleValue());
     }
 
@@ -24,8 +28,11 @@ public class TransacaoService {
             throw new IllegalArgumentException(MENSAGEM_ERRO_SACAR_CONTA_INATIVA);
         }
 
-        origem.subtrairSaldo(valor, TipoTransacao.SAQUE);
-        historicoTransacoes.add(new Transacao(origem, null, valor, TipoTransacao.SAQUE));
+        origem.subtrairSaldo(valor, TipoTransacao.SAQUE, false);
+        origem.adicionarTransacao(new Transacao(origem, null, valor, TipoTransacao.SAQUE));
+
+        origem.incrementarTransacoesEfetuadas();
+        origem.verificarTipoConta();
         System.out.printf((MENSAGEM_SUCESSO) + "%n", "Saque", valor.doubleValue(), origem.getSaldo().doubleValue());
     }
 
@@ -47,19 +54,17 @@ public class TransacaoService {
 
         origem.subtrairSaldo(valor, TipoTransacao.TRANSFERENCIA, isContato);
         destino.adicionarSaldo(valor);
-        historicoTransacoes.add(new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA));
+
+        Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
+        origem.adicionarTransacao(transacao);
+        destino.adicionarTransacao(transacao);
+
+        origem.incrementarTransacoesEfetuadas();
+        origem.verificarTipoConta();
 
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " +
                 destino.getTitular().getNome() + " realizada com sucesso!");
     }
 
-    public void exibirHistoricoConta(int numeroConta) {
-        System.out.println("Transações da conta " + numeroConta + ":" );
-        for (Transacao t : historicoTransacoes) {
-            if ((t.getOrigem() != null && t.getOrigem().getNumeroConta() == numeroConta) || (t.getDestino() != null && t.getDestino().getNumeroConta() == numeroConta)){
-                System.out.println(t);
-            }
-        }
-    }
 }
 
