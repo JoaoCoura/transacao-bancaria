@@ -65,6 +65,4 @@ public class TransacaoService {
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " +
                 destino.getTitular().getNome() + " realizada com sucesso!");
     }
-
 }
-

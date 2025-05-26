@@ -42,7 +42,7 @@ public class Main {
 
         conta1.mostrarContatos();
 
-        //transferenica invalida, uma vez que a conta1 esta com saldo negativo
+        //transferencia invalida, uma vez que a conta1 esta com saldo negativo
         //gerenciador.transferir(conta1, conta2, new BigDecimal("360.00"));
 
         gerenciador.depositar(conta1, new BigDecimal("200.00"));
