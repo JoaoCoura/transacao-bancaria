@@ -1,6 +1,5 @@
 package builder;
 
-import builder.ClienteBuilder;
 import org.example.modelo.EstadoConta;
 import org.example.modelo.Cliente;
 import org.example.modelo.Conta;
@@ -85,8 +84,8 @@ public final class ContaBuilder {
         conta.setSaldo(saldo);
         conta.setStatus(status);
         //conta.setNumeroConta(numeroConta);
-        conta.setLimite(EstadoConta.limiteConta(this.conta, saldo));
-        conta.setLimiteContato(EstadoConta.limiteContaContato(this.conta, saldo));
+        conta.setLimite(EstadoConta.calcularLimiteConta(this.conta, saldo));
+        conta.setLimiteContato(EstadoConta.calcularLimiteContato(this.conta, saldo));
         return conta;
     }
 }

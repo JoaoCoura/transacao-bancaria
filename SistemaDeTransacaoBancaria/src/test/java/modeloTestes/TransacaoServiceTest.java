@@ -109,7 +109,31 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
+        Assertions.assertEquals(saldoConta, conta.getSaldo());
+    }
+
+    @Test
+    public void depositar_ValorDepositoIgualZero_DeveRetornarErroSobreValorDepositoNaoPositivoENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta conta = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoConta = conta.getSaldo();
+
+        BigDecimal valorDeposito = BigDecimal.ZERO;
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.depositar(conta, valorDeposito);
+        });
+
+        // Assert
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -257,7 +281,31 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
+        Assertions.assertEquals(saldoConta, conta.getSaldo());
+    }
+
+    @Test
+    public void sacar_ValorSaqueIgualZero_DeveRetornarErroSobreValorDepositoNaoPositivoENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta conta = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoConta = conta.getSaldo();
+
+        BigDecimal valorSaque = BigDecimal.ZERO;
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.sacar(conta, valorSaque);
+        });
+
+        // Assert
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
         Assertions.assertEquals(saldoConta, conta.getSaldo());
     }
 
@@ -431,7 +479,69 @@ public class TransacaoServiceTest {
         });
 
         // Assert
-        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NEGATIVO, exception.getMessage());
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
+        Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
+        Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
+    }
+
+    @Test
+    public void transferir_ValorTransferenciaIgualZero_DeveRetornarErroSobreValorTransferenciaNaoPositivoENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta contaOrigem = ContaBuilder
+                .novaConta()
+                .build();
+
+        Conta contaDestino = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoContaOrigem = contaOrigem.getSaldo();
+        BigDecimal saldoContaDestino = contaDestino.getSaldo();
+
+        BigDecimal valorTransferencia = BigDecimal.ZERO;
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.transferir(contaOrigem, contaDestino, valorTransferencia);
+        });
+
+        // Assert
+        Assertions.assertEquals(MENSAGEM_ERRO_VALOR_NAO_POSITIVO, exception.getMessage());
+        Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
+        Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
+    }
+
+    @Test
+    public void transferir_ValorTransferenciaComMaisDeDuasCasasDecimais_DeveRetornarErroSobreCasasDecimaisENaoRealizarOperacao()
+    {
+        // Arrange
+        TransacaoService gerenciador = new TransacaoService();
+
+        Conta contaOrigem = ContaBuilder
+                .novaConta()
+                .build();
+
+        Conta contaDestino = ContaBuilder
+                .novaConta()
+                .build();
+
+        BigDecimal saldoContaOrigem = contaOrigem.getSaldo();
+        BigDecimal saldoContaDestino = contaDestino.getSaldo();
+
+        BigDecimal valorTransferencia = BigDecimal
+                .valueOf(faker.number().randomDouble(2, 0, 1000))
+                .divide(BigDecimal.valueOf(1000), 3, RoundingMode.HALF_UP);
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            gerenciador.transferir(contaOrigem, contaDestino, valorTransferencia);
+        });
+
+        // Assert
+        Assertions.assertEquals(MENSAGEM_ERRO_CASAS_DECIMAIS, exception.getMessage());
         Assertions.assertEquals(saldoContaOrigem, contaOrigem.getSaldo());
         Assertions.assertEquals(saldoContaDestino, contaDestino.getSaldo());
     }

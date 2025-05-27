@@ -152,6 +152,25 @@ public class CadastroClienteTest {
     }
 
     @Test
+    public void cadastrarCliente_CPFComMaisDe11Digitos_DeveRetornarErroSobreCPFComFormatacaoErrada()
+    {
+        // Arrange
+        CadastroCliente cadastro = new CadastroCliente();
+
+        String nome = faker.name().fullName();
+        String cpfErrado = faker.number().digits(12).toString();
+        String email = faker.internet().emailAddress();
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            cadastro.cadastrarCliente(nome, cpfErrado, email);
+        });
+
+        // Assert
+        Assertions.assertEquals("CPF deve conter exatamente 11 dígitos numéricos.", exception.getMessage());
+    }
+
+    @Test
     public void cadastrarCliente_CPFJaCadastrado_DeveRetornarErroSobreCPFJaCadastrado()
     {
         // Arrange

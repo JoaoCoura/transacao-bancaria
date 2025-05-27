@@ -1,8 +1,6 @@
 package org.example.modelo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.example.util.MensagensTransacao.*;
 
@@ -17,7 +15,7 @@ public class TransacaoService {
         destino.adicionarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
 
 
-        destino.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.05")).intValue());
+        destino.incrementarPontos(valor.multiply(new BigDecimal("0.05")).intValue());
         destino.verificarTipoConta();
 
         System.out.printf((MENSAGEM_SUCESSO) + "%n", "Depósito", valor.doubleValue(), destino.getSaldo().doubleValue());
@@ -57,9 +55,9 @@ public class TransacaoService {
         Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
         origem.adicionarTransacao(transacao);
         destino.adicionarTransacao(transacao);
-        destino.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.02")).intValue());
+        destino.incrementarPontos(valor.multiply(new BigDecimal("0.02")).intValue());
 
-        origem.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.1")).intValue());
+        origem.incrementarPontos(valor.multiply(new BigDecimal("0.1")).intValue());
         origem.verificarTipoConta();
 
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " +
