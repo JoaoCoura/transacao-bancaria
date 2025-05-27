@@ -38,8 +38,8 @@ public class Conta {
         estado.imprimirHistoricoTransacoes();
     }
 
-    public void incrementarTransacoesEfetuadas(int pontos) {
-        estado.incrementarTransacoesEfetuadas(pontos);
+    public void incrementarPontos(int pontos) {
+        estado.incrementarPontos(pontos);
     }
 
     public void adicionarContato(Conta conta) {
@@ -64,12 +64,12 @@ public class Conta {
         estado.desativarConta();
     }
 
-    public static BigDecimal limiteConta(TipoConta tipo, BigDecimal saldo){
-        return EstadoConta.limiteConta(tipo, saldo);
+    public static BigDecimal calcularLimiteConta(TipoConta tipo, BigDecimal saldo){
+        return EstadoConta.calcularLimiteConta(tipo, saldo);
     }
 
-    public static BigDecimal limiteContaContato(TipoConta tipo, BigDecimal saldo){
-        return EstadoConta.limiteContaContato(tipo, saldo);
+    public static BigDecimal calcularLimiteContato(TipoConta tipo, BigDecimal saldo){
+        return EstadoConta.calcularLimiteContato(tipo, saldo);
     }
 
     public Cliente getTitular() {

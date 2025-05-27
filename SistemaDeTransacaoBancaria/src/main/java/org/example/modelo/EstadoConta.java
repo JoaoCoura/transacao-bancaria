@@ -29,8 +29,8 @@ public class EstadoConta {
     }
 
     private void atualizarLimites() {
-        this.limite = limiteConta(tipoConta, saldo);
-        this.limiteContato = limiteContaContato(tipoConta, saldo);
+        this.limite = calcularLimiteConta(tipoConta, saldo);
+        this.limiteContato = calcularLimiteContato(tipoConta, saldo);
     }
 
     public void adicionarSaldo(BigDecimal valor) {
@@ -70,7 +70,7 @@ public class EstadoConta {
         }
     }
 
-    public static BigDecimal limiteConta(TipoConta tipo, BigDecimal saldo) {
+    public static BigDecimal calcularLimiteConta(TipoConta tipo, BigDecimal saldo) {
         BigDecimal base = switch (tipo) {
             case COMUM -> saldo.multiply(new BigDecimal("0.5"));
             case SILVER -> saldo.multiply(new BigDecimal("0.8"));
@@ -80,7 +80,7 @@ public class EstadoConta {
         return saldo.add(base).max(BigDecimal.ZERO);
     }
 
-    public static BigDecimal limiteContaContato(TipoConta tipo, BigDecimal saldo) {
+    public static BigDecimal calcularLimiteContato(TipoConta tipo, BigDecimal saldo) {
         BigDecimal base = switch (tipo) {
             case COMUM -> saldo.multiply(new BigDecimal("0.8"));
             case SILVER -> saldo.multiply(new BigDecimal("1.1"));
@@ -90,7 +90,7 @@ public class EstadoConta {
         return saldo.add(base).max(BigDecimal.ZERO);
     }
 
-    public void incrementarTransacoesEfetuadas(int pontos) {
+    public void incrementarPontos(int pontos) {
         this.pontos += pontos;
     }
 
@@ -105,8 +105,8 @@ public class EstadoConta {
             setTipoConta(TipoConta.COMUM);
         }
 
-        this.limite = limiteConta(getTipoConta(), saldo);
-        this.limiteContato = limiteContaContato(getTipoConta(), saldo);
+        this.limite = calcularLimiteConta(getTipoConta(), saldo);
+        this.limiteContato = calcularLimiteContato(getTipoConta(), saldo);
     }
 
     public void ativarConta() {
