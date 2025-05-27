@@ -17,7 +17,7 @@ public class TransacaoService {
         destino.adicionarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
 
 
-        destino.incrementarTransacoesEfetuadas(5);
+        destino.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.05")).intValue());
         destino.verificarTipoConta();
 
         System.out.printf((MENSAGEM_SUCESSO) + "%n", "Depósito", valor.doubleValue(), destino.getSaldo().doubleValue());
@@ -57,9 +57,9 @@ public class TransacaoService {
         Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
         origem.adicionarTransacao(transacao);
         destino.adicionarTransacao(transacao);
-        destino.incrementarTransacoesEfetuadas(3);
+        destino.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.02")).intValue());
 
-        origem.incrementarTransacoesEfetuadas(10);
+        origem.incrementarTransacoesEfetuadas(valor.multiply(new BigDecimal("0.1")).intValue());
         origem.verificarTipoConta();
 
         System.out.println("Transferência de R$" + valor + " de "+ origem.getTitular().getNome() + " para " +
