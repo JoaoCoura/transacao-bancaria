@@ -38,8 +38,8 @@ public class Conta {
         estado.imprimirHistoricoTransacoes();
     }
 
-    public void incrementarTransacoesEfetuadas() {
-        estado.incrementarTransacoesEfetuadas();
+    public void incrementarTransacoesEfetuadas(int pontos) {
+        estado.incrementarTransacoesEfetuadas(pontos);
     }
 
     public void adicionarContato(Conta conta) {
@@ -137,7 +137,7 @@ public class Conta {
                 ", limiteContato: " + estado.getLimiteContato() +
                 ", status: " + estado.getStatus() +
                 ", tipo: " + estado.getTipoConta() +
-                ", qtdTransacoes: " + estado.getQtdTransacoesEfetuadas() +
+                ", pontos: " + estado.getPontos() +
                 '}';
     }
 }

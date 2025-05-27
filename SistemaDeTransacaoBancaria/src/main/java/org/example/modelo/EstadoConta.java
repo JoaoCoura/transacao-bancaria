@@ -14,7 +14,7 @@ public class EstadoConta {
     private BigDecimal limiteContato;
     private TipoConta tipoConta;
     private TipoStatus status;
-    private int qtdTransacoesEfetuadas;
+    private int pontos;
     private final List<Transacao> historico;
     private final Set<Conta> contatos;
 
@@ -24,7 +24,7 @@ public class EstadoConta {
         this.status = TipoStatus.ATIVA;
         this.historico = new ArrayList<>();
         this.contatos = new HashSet<>();
-        this.qtdTransacoesEfetuadas = 0;
+        this.pontos = 0;
         atualizarLimites();
     }
 
@@ -90,16 +90,16 @@ public class EstadoConta {
         return saldo.add(base).max(BigDecimal.ZERO);
     }
 
-    public void incrementarTransacoesEfetuadas() {
-        this.qtdTransacoesEfetuadas++;
+    public void incrementarTransacoesEfetuadas(int pontos) {
+        this.pontos += pontos;
     }
 
     public void verificarTipoConta(){
-        if (qtdTransacoesEfetuadas > 50) {
+        if (pontos >= 1000) {
             setTipoConta(TipoConta.DIAMOND);
-        } else if (qtdTransacoesEfetuadas > 30) {
+        } else if (pontos >= 500) {
             setTipoConta(TipoConta.GOLD);
-        } else if (qtdTransacoesEfetuadas > 10) {
+        } else if (pontos >= 200) {
             setTipoConta(TipoConta.SILVER);
         } else {
             setTipoConta(TipoConta.COMUM);
@@ -163,8 +163,8 @@ public class EstadoConta {
         return status;
     }
 
-    public int getQtdTransacoesEfetuadas() {
-        return qtdTransacoesEfetuadas;
+    public int getPontos() {
+        return pontos;
     }
 
     public List<Transacao> getHistorico() {
