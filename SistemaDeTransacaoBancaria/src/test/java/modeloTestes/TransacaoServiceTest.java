@@ -14,6 +14,7 @@ import static org.example.util.MensagensTransacao.*;
 public class TransacaoServiceTest {
 
     private static final Faker faker = new Faker();
+
     @Test
     public void depositar_ContaAtivaESemSaldo_DeveAumentarSaldoDaContaDestinoRegistrarTransacaoEIncrementarPontos()
     {
