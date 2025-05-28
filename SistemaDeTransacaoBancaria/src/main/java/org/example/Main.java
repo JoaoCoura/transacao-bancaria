@@ -13,57 +13,60 @@ public class Main {
         CadastroCliente cadastro = new CadastroCliente();
         Cliente cliente1 = cadastro.cadastrarCliente("Ocara", "12345678910", "ocara@gmail.com");
         Cliente cliente2 = cadastro.cadastrarCliente("Fuba", "78945612310", "fubs@gmail.com");
+        System.out.println();
 
         Conta conta1 = new Conta(cliente1);
         Conta conta2 = new Conta(cliente2);
-
         System.out.println(conta1);
         System.out.println(conta2);
+        System.out.println();
 
         TransacaoService gerenciador = new TransacaoService();
-
         gerenciador.depositar(conta1, new BigDecimal("500.00"));
-        gerenciador.sacar(conta1, new BigDecimal("200.00"));
-        gerenciador.transferir(conta1, conta2, new BigDecimal("100.00"));
+        System.out.println();
 
-        gerenciador.depositar(conta2, new BigDecimal("900.00"));
-
-        System.out.println("Historico de Transacoes do Ocara: ");
+        System.out.println("Historico de Transacoes de Ocara: ");
         conta1.imprimirHistoricoTransacoes();
+        System.out.println();
 
-        System.out.println(conta1.getLimite());
-        System.out.println(conta1.getLimiteContato());
+        System.out.println(conta1);
+        System.out.println();
+
+        //conta1.adicionarContato(conta2); //
+        conta1.mostrarContatos();
+        System.out.println();
+
+        gerenciador.transferir(conta1, conta2, new BigDecimal("900.00"));
+        System.out.println("Historico de Transacoes de Ocara: ");
+        conta1.imprimirHistoricoTransacoes();
+        System.out.println();
+
+        System.out.println("Historico de Transacoes de Fuba: ");
+        conta2.imprimirHistoricoTransacoes();
+        System.out.println();
+
         System.out.println(conta1);
         System.out.println(conta2);
-        conta1.adicionarContato(conta2);
-        conta1.adicionarContato(conta1);
+        System.out.println();
 
-        gerenciador.transferir(conta1, conta2, new BigDecimal("360.00"));
-
-        conta1.mostrarContatos();
-
-        //transferencia invalida, uma vez que a conta1 esta com saldo negativo
-        //gerenciador.transferir(conta1, conta2, new BigDecimal("360.00"));
-
-        gerenciador.depositar(conta1, new BigDecimal("200.00"));
+        gerenciador.depositar(conta1, new BigDecimal("1000.00"));
         System.out.println(conta1);
 
-        //acima do limite, deve bloquear
-        gerenciador.transferir(conta1, conta2, new BigDecimal("130.00"));
+        conta1.removerContato(conta2);
+        gerenciador.transferir(conta1, conta2, new BigDecimal("1000.00")); //
+        //gerenciador.transferir(conta1, conta2, new BigDecimal("900.00")); //
+        System.out.println();
+
         System.out.println(conta1);
+        gerenciador.depositar(conta1, new BigDecimal("900.00"));
 
+        System.out.println(conta1);
+        System.out.println("Historico de Transacoes de Ocara: ");
+        conta1.imprimirHistoricoTransacoes();
+        System.out.println();
 
-        // teste limite
-        //gerenciador.transferir(conta1, conta2, new BigDecimal("300.00"));
-        //System.out.println(conta1.getSaldo());
-        //System.out.println(conta1.getLimite());
-        //System.out.println(conta1.getTipoConta());
-
-
-        //System.out.println(conta1);
-        //System.out.println(conta2);
-
-
+        System.out.println(conta2);
+        System.out.println("Historico de Transacoes de Fuba: ");
+        conta2.imprimirHistoricoTransacoes();
     }
-
 }

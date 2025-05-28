@@ -1,28 +1,39 @@
 package builder;
 
-import org.example.modelo.EstadoConta;
-import org.example.modelo.Cliente;
-import org.example.modelo.Conta;
-import org.example.modelo.TipoConta;
-import org.example.modelo.TipoStatus;
+import org.example.modelo.*;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public final class ContaBuilder {
 
     private Cliente titular;
     private BigDecimal saldo;
     private BigDecimal limite;
+    private BigDecimal limiteContato;
     private TipoConta conta;
     private TipoStatus status;
     private int numeroConta;
+    private final List<Transacao> historico;
+    private final Set<Conta> contatos;
+    private TipoConta tipo;
+    private int pontos;
 
     private ContaBuilder() {
         this.titular = ClienteBuilder.novoCliente().build();
         this.saldo = BigDecimal.ZERO;
         this.limite = BigDecimal.ZERO;
+        this.limiteContato = BigDecimal.ZERO;
         this.conta = TipoConta.COMUM;
         this.status = TipoStatus.ATIVA;
         this.numeroConta = new Conta(titular).getNumeroConta();
+        this.historico = new ArrayList<>();
+        this.contatos = new HashSet<>();
+        this.tipo = TipoConta.COMUM;
+        this.pontos = 0;
     }
 
     public static ContaBuilder novaConta() {
@@ -79,13 +90,24 @@ public final class ContaBuilder {
         return this;
     }
 
+    public ContaBuilder comContato(Conta contato)
+    {
+        this.contatos.add(contato);
+        return this;
+    }
+
+    public ContaBuilder comPontos(int pontos) {
+        this.pontos = pontos;
+        return this;
+    }
+
     public Conta build() {
         Conta conta = new Conta(titular);
         conta.setSaldo(saldo);
         conta.setStatus(status);
-        //conta.setNumeroConta(numeroConta);
         conta.setLimite(EstadoConta.calcularLimiteConta(this.conta, saldo));
         conta.setLimiteContato(EstadoConta.calcularLimiteContato(this.conta, saldo));
+        conta.setTipoConta(tipo);
         return conta;
     }
 }

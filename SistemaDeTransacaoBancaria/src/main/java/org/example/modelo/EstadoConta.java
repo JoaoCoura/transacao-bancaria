@@ -1,6 +1,7 @@
 package org.example.modelo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,8 +16,8 @@ public class EstadoConta {
     private TipoConta tipoConta;
     private TipoStatus status;
     private int pontos;
-    private final List<Transacao> historico;
-    private final Set<Conta> contatos;
+    private List<Transacao> historico;
+    private Set<Conta> contatos;
 
     public EstadoConta() {
         this.saldo = BigDecimal.ZERO;
@@ -47,7 +48,7 @@ public class EstadoConta {
                 throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, this.getSaldo().doubleValue()));
             }
             if (isContato && limiteContato.compareTo(valor) < 0) {
-                throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, this.getLimiteContato().doubleValue()));
+                throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE_CONTATO, this.getLimiteContato().doubleValue()));
             } else if (!isContato && limite.compareTo(valor) < 0) {
                 throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_LIMITE, this.getLimite().doubleValue()));
             }
@@ -77,7 +78,7 @@ public class EstadoConta {
             case GOLD -> saldo.multiply(new BigDecimal("1.1"));
             case DIAMOND -> saldo.multiply(new BigDecimal("2"));
         };
-        return saldo.add(base).max(BigDecimal.ZERO);
+        return saldo.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
     }
 
     public static BigDecimal calcularLimiteContato(TipoConta tipo, BigDecimal saldo) {
@@ -87,7 +88,7 @@ public class EstadoConta {
             case GOLD -> saldo.multiply(new BigDecimal("2"));
             case DIAMOND -> saldo.multiply(new BigDecimal("4"));
         };
-        return saldo.add(base).max(BigDecimal.ZERO);
+        return saldo.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
     }
 
     public void incrementarPontos(int pontos) {
@@ -138,6 +139,7 @@ public class EstadoConta {
     public void adicionarTransacao(Transacao transacao) {
         historico.add(transacao);
     }
+
 
     public void imprimirHistoricoTransacoes() {
         historico.forEach(System.out::println);

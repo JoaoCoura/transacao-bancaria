@@ -1,15 +1,13 @@
 package org.example.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public class Conta {
-
-    private Cliente titular;
-    private int numeroConta;
     private static int numeroContaAtual = 1;
-    private final DescricaoConta descricao;
-    private final EstadoConta estado;
+    private DescricaoConta descricao;
+    private EstadoConta estado;
 
 
     public Conta(Cliente titular) {
@@ -110,6 +108,15 @@ public class Conta {
 
     public void setTipoConta(TipoConta tipoConta){
         this.estado.setTipoConta(tipoConta);
+    }
+
+    public List<Transacao> getHistorico() {
+        return estado.getHistorico();
+    }
+
+    public int getPontos()
+    {
+        return estado.getPontos();
     }
 
     public void setSaldo(BigDecimal saldo) {
