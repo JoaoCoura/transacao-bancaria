@@ -14,12 +14,12 @@ public final class ContaBuilder {
     private BigDecimal saldo;
     private BigDecimal limite;
     private BigDecimal limiteContato;
-    private TipoConta conta;
-    private TipoStatus status;
+    private Categoria conta;
+    private Status status;
     private int numeroConta;
     private final List<Transacao> historico;
     private final Set<Conta> contatos;
-    private TipoConta tipo;
+    private Categoria categoria;
     private int pontos;
 
     private ContaBuilder() {
@@ -27,12 +27,12 @@ public final class ContaBuilder {
         this.saldo = BigDecimal.ZERO;
         this.limite = BigDecimal.ZERO;
         this.limiteContato = BigDecimal.ZERO;
-        this.conta = TipoConta.COMUM;
-        this.status = TipoStatus.ATIVA;
+        this.conta = Categoria.COMUM;
+        this.status = Status.ATIVA;
         this.numeroConta = new Conta(titular).getNumeroConta();
         this.historico = new ArrayList<>();
         this.contatos = new HashSet<>();
-        this.tipo = TipoConta.COMUM;
+        this.categoria = Categoria.COMUM;
         this.pontos = 0;
     }
 
@@ -61,32 +61,32 @@ public final class ContaBuilder {
     }
 
     public ContaBuilder comStatusAtiva() {
-        this.status = TipoStatus.ATIVA;
+        this.status = Status.ATIVA;
         return this;
     }
 
     public ContaBuilder comStatusInativa() {
-        this.status = TipoStatus.INATIVA;
+        this.status = Status.INATIVA;
         return this;
     }
 
     public ContaBuilder comTipoComum() {
-        this.conta = TipoConta.COMUM;
+        this.conta = Categoria.COMUM;
         return this;
     }
 
     public ContaBuilder comTipoSilver() {
-        this.conta = TipoConta.SILVER;
+        this.conta = Categoria.SILVER;
         return this;
     }
 
     public ContaBuilder comTipoGold() {
-        this.conta = TipoConta.GOLD;
+        this.conta = Categoria.GOLD;
         return this;
     }
 
     public ContaBuilder comTipoDiamond() {
-        this.conta = TipoConta.DIAMOND;
+        this.conta = Categoria.DIAMOND;
         return this;
     }
 
@@ -107,7 +107,7 @@ public final class ContaBuilder {
         conta.setStatus(status);
         conta.setLimite(EstadoConta.calcularLimiteConta(this.conta, saldo));
         conta.setLimiteContato(EstadoConta.calcularLimiteContato(this.conta, saldo));
-        conta.setTipoConta(tipo);
+        conta.setCategoria(categoria);
         return conta;
     }
 }

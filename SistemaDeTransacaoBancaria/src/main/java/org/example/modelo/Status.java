@@ -1,6 +1,6 @@
 package org.example.modelo;
 
-public enum TipoStatus {
+public enum Status {
     ATIVA,
     INATIVA
 }

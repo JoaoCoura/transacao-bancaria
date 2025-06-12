@@ -30,8 +30,30 @@ public class Validator {
     {
         verificarNaoNulo(cpf, nomeDoCampo);
 
+        cpf = cpf.replaceAll("[^\\d]", "");
+
         if (!cpf.matches("\\d{11}")) {
             throw new IllegalArgumentException(nomeDoCampo + " deve conter exatamente 11 dígitos numéricos.");
+        }
+
+        if (cpf.matches("(\\d)\\1{10}"))
+        {
+            throw new IllegalArgumentException(nomeDoCampo + " não deve ter uma sequência de números iguais.");
+        }
+
+        int soma = 0;
+        for (int i = 0; i < 9; i++)
+            soma += (cpf.charAt(i) - '0') * (10 - i);
+        int dig1 = 11 - (soma % 11);
+        dig1 = (dig1 >= 10) ? 0 : dig1;
+
+        soma = 0;
+        for (int i = 0; i < 10; i++)
+            soma += (cpf.charAt(i) - '0') * (11 - i);
+        int dig2 = 11 - (soma % 11);
+        dig2 = (dig2 >= 10) ? 0 : dig2;
+        if (!(dig1 == (cpf.charAt(9) - '0') && dig2 == (cpf.charAt(10) - '0'))) {
+            throw new IllegalArgumentException(nomeDoCampo + " não deve conter dígitos verificadores incorretos.");
         }
     }
 }

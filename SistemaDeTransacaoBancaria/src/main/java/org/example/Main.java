@@ -11,8 +11,8 @@ import java.sql.SQLOutput;
 public class Main {
     public static void main(String[] args) {
         CadastroCliente cadastro = new CadastroCliente();
-        Cliente cliente1 = cadastro.cadastrarCliente("Ocara", "12345678910", "ocara@gmail.com");
-        Cliente cliente2 = cadastro.cadastrarCliente("Fuba", "78945612310", "fubs@gmail.com");
+        Cliente cliente1 = cadastro.cadastrarCliente("Ocara", "52527579841", "ocara@gmail.com");
+        Cliente cliente2 = cadastro.cadastrarCliente("Fuba", "233.133.978-32", "fubs@gmail.com");
         System.out.println();
 
         Conta conta1 = new Conta(cliente1);

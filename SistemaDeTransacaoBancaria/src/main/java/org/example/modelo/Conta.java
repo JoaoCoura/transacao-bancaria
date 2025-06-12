@@ -24,8 +24,8 @@ public class Conta {
         estado.adicionarSaldo(valor);
     }
 
-    public void subtrairSaldo(BigDecimal valor, TipoTransacao tipoTransacao, boolean isContato) {
-        estado.subtrairSaldo(valor, tipoTransacao, isContato);
+    public void subtrairSaldo(BigDecimal valor, Operacao operacao, boolean isContato) {
+        estado.subtrairSaldo(valor, operacao, isContato);
     }
 
     public void adicionarTransacao(Transacao transacao) {
@@ -62,12 +62,12 @@ public class Conta {
         estado.desativarConta();
     }
 
-    public static BigDecimal calcularLimiteConta(TipoConta tipo, BigDecimal saldo){
-        return EstadoConta.calcularLimiteConta(tipo, saldo);
+    public static BigDecimal calcularLimiteConta(Categoria categoria, BigDecimal saldo){
+        return EstadoConta.calcularLimiteConta(categoria, saldo);
     }
 
-    public static BigDecimal calcularLimiteContato(TipoConta tipo, BigDecimal saldo){
-        return EstadoConta.calcularLimiteContato(tipo, saldo);
+    public static BigDecimal calcularLimiteContato(Categoria categoria, BigDecimal saldo){
+        return EstadoConta.calcularLimiteContato(categoria, saldo);
     }
 
     public Cliente getTitular() {
@@ -78,7 +78,7 @@ public class Conta {
         return descricao.getNumeroConta();
     }
 
-    public TipoStatus getStatus(){
+    public Status getStatus(){
         return estado.getStatus();
     }
 
@@ -106,8 +106,8 @@ public class Conta {
         return estado.getLimiteContato();
     }
 
-    public void setTipoConta(TipoConta tipoConta){
-        this.estado.setTipoConta(tipoConta);
+    public void setCategoria(Categoria categoria){
+        this.estado.setCategoria(categoria);
     }
 
     public List<Transacao> getHistorico() {
@@ -123,7 +123,7 @@ public class Conta {
         this.estado.setSaldo(saldo);
     }
 
-    public void setStatus(TipoStatus status) {
+    public void setStatus(Status status) {
         this.estado.setStatus(status);
     }
 
@@ -143,7 +143,7 @@ public class Conta {
                 ", limite: " + estado.getLimite() +
                 ", limiteContato: " + estado.getLimiteContato() +
                 ", status: " + estado.getStatus() +
-                ", tipo: " + estado.getTipoConta() +
+                ", categoria: " + estado.getCategoria() +
                 ", pontos: " + estado.getPontos() +
                 '}';
     }

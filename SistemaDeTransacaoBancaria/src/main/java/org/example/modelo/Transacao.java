@@ -8,13 +8,13 @@ public class Transacao {
     private Conta destino;
     private BigDecimal valor;
     private LocalDateTime dataHora;
-    private TipoTransacao tipo;
+    private Operacao operacao;
 
-    public Transacao(Conta origem, Conta destino, BigDecimal valor, TipoTransacao tipo) {
+    public Transacao(Conta origem, Conta destino, BigDecimal valor, Operacao operacao) {
         this.origem = origem;
         this.destino = destino;
         this.valor = valor;
-        this.tipo = tipo;
+        this.operacao = operacao;
         this.dataHora = LocalDateTime.now();
     }
 
@@ -25,7 +25,7 @@ public class Transacao {
                 ", destino: " + (destino != null ? destino.getNumeroConta() : "N/A") +
                 ", valor: " + valor +
                 ", dataHora: " + dataHora +
-                ", tipo: " + tipo +
+                ", Operacao: " + operacao +
                 '}';
     }
 

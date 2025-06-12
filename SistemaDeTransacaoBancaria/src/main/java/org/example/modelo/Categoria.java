@@ -1,6 +1,6 @@
 package org.example.modelo;
 
-public enum TipoConta {
+public enum Categoria {
     COMUM, 
     SILVER, 
     GOLD, 

@@ -7,12 +7,12 @@ import static org.example.util.MensagensTransacao.*;
 public class TransacaoService {
 
     public void depositar(Conta destino, BigDecimal valor) {
-        if(destino.getStatus() == TipoStatus.INATIVA){
+        if(destino.getStatus() == Status.INATIVA){
             throw new IllegalArgumentException(MENSAGEM_ERRO_DEPOSITAR_CONTA_INATIVA);
         }
 
         destino.adicionarSaldo(valor);
-        destino.adicionarTransacao(new Transacao(null, destino, valor, TipoTransacao.DEPOSITO));
+        destino.adicionarTransacao(new Transacao(null, destino, valor, Operacao.DEPOSITO));
 
 
         destino.incrementarPontos(valor.multiply(new BigDecimal("0.05")).intValue());
@@ -22,12 +22,12 @@ public class TransacaoService {
     }
 
     public void sacar(Conta origem, BigDecimal valor) {
-        if (origem.getStatus() == TipoStatus.INATIVA){
+        if (origem.getStatus() == Status.INATIVA){
             throw new IllegalArgumentException(MENSAGEM_ERRO_SACAR_CONTA_INATIVA);
         }
 
-        origem.subtrairSaldo(valor, TipoTransacao.SAQUE, false);
-        origem.adicionarTransacao(new Transacao(origem, null, valor, TipoTransacao.SAQUE));
+        origem.subtrairSaldo(valor, Operacao.SAQUE, false);
+        origem.adicionarTransacao(new Transacao(origem, null, valor, Operacao.SAQUE));
 
         origem.verificarTipoConta();
         System.out.printf((MENSAGEM_SUCESSO) + "%n", "Saque", valor.doubleValue(), origem.getSaldo().doubleValue());
@@ -39,20 +39,20 @@ public class TransacaoService {
             throw new IllegalArgumentException(MENSAGEM_ERRO_PROPRIA_CONTA);
         }
 
-        if (origem.getStatus() == TipoStatus.INATIVA){
+        if (origem.getStatus() == Status.INATIVA){
             throw new IllegalArgumentException(MENSAGEM_ERRO_CONTA_INATIVA_ORIGEM);
         }
 
-        if(destino.getStatus() == TipoStatus.INATIVA){
+        if(destino.getStatus() == Status.INATIVA){
             throw new IllegalArgumentException(MENSAGEM_ERRO_CONTA_INATIVA_DESTINO);
         }
 
         boolean isContato = origem.getContatos().contains(destino);
 
-        origem.subtrairSaldo(valor, TipoTransacao.TRANSFERENCIA, isContato);
+        origem.subtrairSaldo(valor, Operacao.TRANSFERENCIA, isContato);
         destino.adicionarSaldo(valor);
 
-        Transacao transacao = new Transacao(origem, destino, valor, TipoTransacao.TRANSFERENCIA);
+        Transacao transacao = new Transacao(origem, destino, valor, Operacao.TRANSFERENCIA);
         origem.adicionarTransacao(transacao);
         destino.adicionarTransacao(transacao);
         destino.incrementarPontos(valor.multiply(new BigDecimal("0.02")).intValue());

@@ -13,16 +13,16 @@ public class EstadoConta {
     private BigDecimal saldo;
     private BigDecimal limite;
     private BigDecimal limiteContato;
-    private TipoConta tipoConta;
-    private TipoStatus status;
+    private Categoria categoria;
+    private Status status;
     private int pontos;
     private List<Transacao> historico;
     private Set<Conta> contatos;
 
     public EstadoConta() {
         this.saldo = BigDecimal.ZERO;
-        this.tipoConta = TipoConta.COMUM;
-        this.status = TipoStatus.ATIVA;
+        this.categoria = Categoria.COMUM;
+        this.status = Status.ATIVA;
         this.historico = new ArrayList<>();
         this.contatos = new HashSet<>();
         this.pontos = 0;
@@ -30,8 +30,8 @@ public class EstadoConta {
     }
 
     private void atualizarLimites() {
-        this.limite = calcularLimiteConta(tipoConta, saldo);
-        this.limiteContato = calcularLimiteContato(tipoConta, saldo);
+        this.limite = calcularLimiteConta(categoria, saldo);
+        this.limiteContato = calcularLimiteContato(categoria, saldo);
     }
 
     public void adicionarSaldo(BigDecimal valor) {
@@ -40,10 +40,10 @@ public class EstadoConta {
         atualizarLimites();
     }
 
-    public void subtrairSaldo(BigDecimal valor, TipoTransacao tipoTransacao, boolean isContato) {
+    public void subtrairSaldo(BigDecimal valor, Operacao operacao, boolean isContato) {
         validarValor(valor);
 
-        if (tipoTransacao == TipoTransacao.TRANSFERENCIA) {
+        if (operacao == Operacao.TRANSFERENCIA) {
             if (saldo.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException(String.format(MENSAGEM_ERRO_SALDO_INSUFICIENTE, this.getSaldo().doubleValue()));
             }
@@ -71,24 +71,24 @@ public class EstadoConta {
         }
     }
 
-    public static BigDecimal calcularLimiteConta(TipoConta tipo, BigDecimal saldo) {
-        BigDecimal base = switch (tipo) {
-            case COMUM -> saldo.multiply(new BigDecimal("0.5"));
-            case SILVER -> saldo.multiply(new BigDecimal("0.8"));
-            case GOLD -> saldo.multiply(new BigDecimal("1.1"));
-            case DIAMOND -> saldo.multiply(new BigDecimal("2"));
+    public static BigDecimal calcularLimiteConta(Categoria categoria, BigDecimal saldoAtual) {
+        BigDecimal base = switch (categoria) {
+            case COMUM -> saldoAtual.multiply(new BigDecimal("0.5"));
+            case SILVER -> saldoAtual.multiply(new BigDecimal("0.8"));
+            case GOLD -> saldoAtual.multiply(new BigDecimal("1.1"));
+            case DIAMOND -> saldoAtual.multiply(new BigDecimal("2"));
         };
-        return saldo.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
+        return saldoAtual.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal calcularLimiteContato(TipoConta tipo, BigDecimal saldo) {
-        BigDecimal base = switch (tipo) {
-            case COMUM -> saldo.multiply(new BigDecimal("0.8"));
-            case SILVER -> saldo.multiply(new BigDecimal("1.1"));
-            case GOLD -> saldo.multiply(new BigDecimal("2"));
-            case DIAMOND -> saldo.multiply(new BigDecimal("4"));
+    public static BigDecimal calcularLimiteContato(Categoria categoria, BigDecimal saldoAtual) {
+        BigDecimal base = switch (categoria) {
+            case COMUM -> saldoAtual.multiply(new BigDecimal("0.8"));
+            case SILVER -> saldoAtual.multiply(new BigDecimal("1.1"));
+            case GOLD -> saldoAtual.multiply(new BigDecimal("2"));
+            case DIAMOND -> saldoAtual.multiply(new BigDecimal("4"));
         };
-        return saldo.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
+        return saldoAtual.add(base).max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
     }
 
     public void incrementarPontos(int pontos) {
@@ -97,25 +97,25 @@ public class EstadoConta {
 
     public void verificarTipoConta(){
         if (pontos >= 1000) {
-            setTipoConta(TipoConta.DIAMOND);
+            setCategoria(Categoria.DIAMOND);
         } else if (pontos >= 500) {
-            setTipoConta(TipoConta.GOLD);
+            setCategoria(Categoria.GOLD);
         } else if (pontos >= 200) {
-            setTipoConta(TipoConta.SILVER);
+            setCategoria(Categoria.SILVER);
         } else {
-            setTipoConta(TipoConta.COMUM);
+            setCategoria(Categoria.COMUM);
         }
 
-        this.limite = calcularLimiteConta(getTipoConta(), saldo);
-        this.limiteContato = calcularLimiteContato(getTipoConta(), saldo);
+        this.limite = calcularLimiteConta(getCategoria(), saldo);
+        this.limiteContato = calcularLimiteContato(getCategoria(), saldo);
     }
 
     public void ativarConta() {
-        this.status = TipoStatus.ATIVA;
+        this.status = Status.ATIVA;
     }
 
     public void desativarConta() {
-        this.status = TipoStatus.INATIVA;
+        this.status = Status.INATIVA;
     }
 
     public void adicionarContato(Conta conta) {
@@ -157,11 +157,11 @@ public class EstadoConta {
         return limiteContato;
     }
 
-    public TipoConta getTipoConta() {
-        return tipoConta;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public TipoStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -177,15 +177,15 @@ public class EstadoConta {
         return contatos;
     }
 
-    public void setTipoConta(TipoConta tipoConta){
-        this.tipoConta = tipoConta;
+    public void setCategoria(Categoria categoria){
+        this.categoria = categoria;
     }
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 
-    public void setStatus(TipoStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

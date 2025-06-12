@@ -171,6 +171,44 @@ public class CadastroClienteTest {
     }
 
     @Test
+    public void cadastrarCliente_CPFComDigitosIguais_DeveRetornarErroSobreCPFComDigitosIguais()
+    {
+        // Arrange
+        CadastroCliente cadastro = new CadastroCliente();
+
+        String nome = faker.name().fullName();
+        String cpfErrado = "11111111111";
+        String email = faker.internet().emailAddress();
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            cadastro.cadastrarCliente(nome, cpfErrado, email);
+        });
+
+        // Assert
+        Assertions.assertEquals("CPF não deve ter uma sequência de números iguais.", exception.getMessage());
+    }
+
+    @Test
+    public void cadastrarCliente_CPFComDigitosVerificadoresIncorretos_DeveRetornarErroSobreCPFComDigitosVerificadoresIncorretos()
+    {
+        // Arrange
+        CadastroCliente cadastro = new CadastroCliente();
+
+        String nome = faker.name().fullName();
+        String cpfErrado = "12345678910";
+        String email = faker.internet().emailAddress();
+
+        // Act
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            cadastro.cadastrarCliente(nome, cpfErrado, email);
+        });
+
+        // Assert
+        Assertions.assertEquals("CPF não deve conter dígitos verificadores incorretos.", exception.getMessage());
+    }
+
+    @Test
     public void cadastrarCliente_CPFJaCadastrado_DeveRetornarErroSobreCPFJaCadastrado()
     {
         // Arrange
